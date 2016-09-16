@@ -214,11 +214,11 @@ glDisableVertexAttribArray(colorSlot);
 *** 着色器的使用流程
 刚开始学习OpenGL ES2.0，对其着色器十分不感冒，什么是着色器，着色器该怎么使用，着色器包含哪些内容呢？
 着色器就是一段包含着色信息的源代码字符串。通常着色器分为顶点着色器（Vertex Shader）和片元着色器（Fragment Shader），两个着色器分别写在不同的文件中，文件没有固定的后缀名，可以根据你自己的爱好写，但是最好能区别文件中写的是顶点着色器还是片元着色器，不然时间长了自己都不知道哪个文件中写的是什么信息了。如你可以给你的顶点着色器后缀名命名为：vert, ver, v, vsh等，给你的片元着色器后缀名命名为：frag, fra, f, fsh等。
-着色器源代码和OpenGL源代码不是一起编译的，所以要特别强调我刚才说的“着色器是一段包含着色信息的源代码字符串”。所以，OpenGL源代码肯定是和工程一起编译的，但是着色器源代码是在运行期编译的。你可能会问，着色器的源代码是一个字符串怎么编译呢？所以OpenGL ES提供了一套运行期动态编译的流程：
-（1）创建着色器：glCreateShader
-（2）指定着色器源代码字符串：glShaderSource
-（3）编译着色器：glCompileShader
-（4）创建着色器可执行程序：glCompileShader
-（5）向可执行程序中添加着色器：glAttachShader
-（6）链接可执行程序：glLinkProgram
+着色器源代码和OpenGL源代码不是一起编译的，所以要特别强调我刚才说的“着色器是一段包含着色信息的源代码字符串”。所以，OpenGL源代码肯定是和工程一起编译的，但是着色器源代码是在运行期编译的。你可能会问，着色器的源代码是一个字符串怎么编译呢？所以OpenGL ES提供了一套运行期动态编译的流程：  
+（1）创建着色器：glCreateShader  
+（2）指定着色器源代码字符串：glShaderSource  
+（3）编译着色器：glCompileShader  
+（4）创建着色器可执行程序：glCompileShader  
+（5）向可执行程序中添加着色器：glAttachShader  
+（6）链接可执行程序：glLinkProgram  
 
