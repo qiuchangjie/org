@@ -195,8 +195,8 @@ glDisableVertexAttribArray(colorSlot);
 - 1.1API函数和宏：glBindRenderbufferOES(GL_RENDERBUFFER_OES, m_renderbuffer);
 - 2.0API函数和宏：glBindRenderbuffer(GL_RENDERBUFFER, m_renderbuffer);
 *** 渲染方式不同
-- 1.1版是基于不可编程管线，2.0版是基于可编程管线的，明显的差别是1.1不支持着色器而2.0支持着色器，如下：
-在1.1版将顶点渲染到屏幕上一般这样写：
+ 1.1版是基于不可编程管线，2.0版是基于可编程管线的，明显的差别是1.1不支持着色器而2.0支持着色器，如下：
+- 在1.1版将顶点渲染到屏幕上一般这样写：
 #+BEGIN_SRC C
     glMatrixMode(GL_PROJECTION);
     const float maxX = 2;
