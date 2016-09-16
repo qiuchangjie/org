@@ -221,3 +221,4 @@ glDisableVertexAttribArray(colorSlot);
 （4）创建着色器可执行程序：glCompileShader
 （5）向可执行程序中添加着色器：glAttachShader
 （6）链接可执行程序：glLinkProgram
+
