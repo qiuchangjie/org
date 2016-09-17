@@ -36,4 +36,4 @@ glutSwapBuffers();
 - 第一个函数的功能仅仅就是清除帧缓存（使用我们在上面指定过的颜色）。第二个函数调用是为了告诉 GLUT 在 backbuffer 和 frontbuffer 之间进行交换。在通过帧回调函数的下一个循环中，我们将场景渲染到当前的 frontbuffer 中，而 backbuffer 将被显示。
 
 ** 操作结果
-- [[https://github.com/qiuchangjie/org/blob/master/%E7%8E%B0%E4%BB%A3OpenGL%E6%95%99%E7%A8%8B/pictures/picture01.jpg]]
+- [[https://github.com/qiuchangjie/org/blob/master/%E7%8E%B0%E4%BB%A3OpenGL%E6%95%99%E7%A8%8B/pictures/picture01.png]]
