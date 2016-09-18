@@ -22,7 +22,7 @@
 #+END_SRC
 - 在这章我们开始使用角度的弧度值。碰巧的是，标准C语言库里面也使用弧度作为参数。上面的宏命令将角度和弧度互换。
 #+BEGIN_SRC C 
-inline Matrix4foperator*(const Matrix4f& Right) const
+inline Matrix4f operator*(const Matrix4f& Right) const
 {
     Matrix4f Ret;
     for(unsigned int i = 0 ; i < 4 ; i++) 
