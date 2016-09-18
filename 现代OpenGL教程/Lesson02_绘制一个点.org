@@ -15,7 +15,7 @@
 #+END_SRC
 - 在这一节我们开始使用其他的一些辅助工具比如 vector。我们以后将会扩展这个头文件。
 #+BEGIN_SRC C
-GLenum res =glewInit();
+GLenum res = glewInit();
 if (res != GLEW_OK)
 {
    fprintf(stderr, "Error: '%s'\n", glewGetErrorString(res));
@@ -25,7 +25,7 @@ if (res != GLEW_OK)
 - 这里我们初始化 GLEW 和检查是否存在一些错误。这必须要在 GLUT 被初始化之前完成。
 #+BEGIN_SRC C
 Vector3fVertices[1];
-Vertices[0] =Vector3f(0.0f, 0.0f, 0.0f);
+Vertices[0] = Vector3f(0.0f, 0.0f, 0.0f);
 #+END_SRC
 - 我们创建了一个类型为 Vector3f（这个类型被定义在 math_3d.h）的数组，同时初始化 X、Y、Z为0.这将会使我们绘制的点出现在屏幕中间。
 #+BEGIN_SRC C
@@ -33,15 +33,15 @@ GLuint VBO;
 #+END_SRC
 - 我们分配一个全局变量 GLuint 储存顶点缓存区对象的句柄，你稍后将看到大部分 OpenGL 对象都是通过一个 GLuint 类型的变量来访问的。
 #+BEGIN_SRC C
-glGenBuffers(1,&VBO);
+glGenBuffers(1, &VBO);
 #+END_SRC
 - OpenGL为了生成不同类型的对象定义几个 glGen* 函数。这些函数通常有两个参数，第一个参数指定你想要创建对象的数量，第二个参数是一个存放 GLuint 类型数组的地址，这个数组用于存放函数生成的句柄（确定数组是足够大来存放你的所申请的缓冲区句柄）。以后调用这个函数将不会生成相同的句柄，除非你使用 glDeleteBuffers 函数删除它。在这个地方，你不需要指定用这些 buffers 用于做什么，所以创建的是普通的 buffers，指定这个 buffer 的功能是下面一个函数的任务
 #+BEGIN_SRC C
-glBindBuffer(GL_ARRAY_BUFFER,VBO);
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
 #+END_SRC
 - OpenGL 有一个独一无二的方法使用句柄。在许多的 API 中，句柄只是简单的通过一些相关的函数来使用。在 OpenGL 中我们绑定句柄到到一个目标上，然后在目标上执行命令。这些命令的执行只影响到已经绑定的句柄，直到当前句柄被代替或者将0绑定到目标上。目标 GL_ARRAY_BUFFER 表示缓冲区用于存储顶点数组。另一个有用的目标是 GL_ELEMENT_ARRAY_BUFFER 表示缓冲区用于存储数组的索引。我们也可以将句柄绑定到别的目标上，我们将在下一节看到。
 #+BEGIN_SRC C
-glBufferData(GL_ARRAY_BUFFER,sizeof(Vertices),Vertices,GL_STATIC_DRA);
+glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRA);
 #+END_SRC
 - 当我们将缓冲区绑定到目标上之后，我们需要用数据进行填充。上面函数的参数包括：目标点名称（和上面缓冲区绑定的目标点一样），数据的字节数，顶点数组的地址，以及一个表示数据使用方式的枚举量。因为我们不需要改变缓冲区中的内容，所谓我们将数据指定为 GL_STATIC_DRAW，与之相反的我们可以将其设置为 GL_DYNAMIC_DRAW。通过设定这个值，OpenGL可以对数据进行一些优化（比如在内存中哪个地方最适合存储缓冲区）。
 #+BEGIN_SRC C
@@ -49,7 +49,7 @@ glEnableVertexAttribArray(0);
 #+END_SRC
 - 在 shaders 章节中，你将看见 Shader 中用到的顶点属性（位置，法线等）有一个映射到它们的索引，使我们在 C/C++ 项目中创建的数据能与 Shader 内的属性名之间进行绑定。此外你必须启用每个顶点属性的索引。在这一节中我们还没使用任何 Shader，但是我们加载到缓冲器的顶点位置属性在固定函数管线（在没有绑定着色器的时候就自动启用固定管线）中被看做顶点属性索引为0。你必须启用所有的顶点属性，否则管线将接收不到数据。
 #+BEGIN_SRC C
-glBindBuffer(GL_ARRAY_BUFFER,VBO);
+glBindBuffer(GL_ARRAY_BUFFER, VBO);
 #+END_SRC
 - 由于将要调用绘图函数，所以这里我们再一次绑定了缓冲区。在这个小的项目中我们只有一个顶点缓冲区，所以在每一帧都调用这个函数是多余的。但是在更复杂的项目中可能存在很多个缓冲区来存储不同类型的变量，所以你必须用你打算使用的缓冲区来更新渲染管线状态。
 #+BEGIN_SRC C
