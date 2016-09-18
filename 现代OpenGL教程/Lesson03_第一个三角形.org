@@ -2,7 +2,7 @@
 ** 背景
 - 这一节是非常短的。我们简单的扩展上一节的内容来画一个三角形。
 - 在这一节中我们再一次在规范化空间中安排我们的顶点坐标。能够看见的顶点一定要在盒子内部，这样视口矩阵才能将这些顶点映射到窗口可以看见的地方。当我们忽略 Z 轴时，我们看到的盒子如下图：
-- [[https://github.com/qiuchangjie/org/blob/master/%E7%8E%B0%E4%BB%A3OpenGL%E6%95%99%E7%A8%8B/pictures/picture031.jpg]]
+- [[https://github.com/qiuchangjie/org/blob/master/%E7%8E%B0%E4%BB%A3OpenGL%E6%95%99%E7%A8%8B/pictures/picture031.png]]
 - 点（-1.0，-1.0）是被映射到窗口的左下角，（-1.0，1.0）被映射到窗口的左上角等等。如果你将顶点的位置坐标扩展到这个盒子的外边，那么这个三角形将被截断同时你只能看到它的一部分。
 
 ** 代码
