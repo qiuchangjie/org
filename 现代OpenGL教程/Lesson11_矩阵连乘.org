@@ -24,7 +24,7 @@
 #+BEGIN_SRC C 
 inline Matrix4foperator*(const Matrix4f& Right) const
 {
-    Matrix4fRet;
+    Matrix4f Ret;
     for(unsigned int i = 0 ; i < 4 ; i++) 
     {
        for (unsigned int j = 0 ; j < 4 ; j++)
