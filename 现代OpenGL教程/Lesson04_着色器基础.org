@@ -92,4 +92,4 @@ FragColor = vec4(1.0, 0.0, 0.0, 1.0);
 - 在前面的教程中由于我们并没有使用片元着色器，所以所有的物体都被绘制成默认的白色。这里我们将颜色设置为红色。
 
 ** 操作结果
-- [[https://github.com/qiuchangjie/org/blob/master/%E7%8E%B0%E4%BB%A3OpenGL%E6%95%99%E7%A8%8B/pictures/picture042.png]]
+- [[https://github.com/qiuchangjie/org/blob/master/%E7%8E%B0%E4%BB%A3OpenGL%E6%95%99%E7%A8%8B/pictures/picture042.jpg]]
