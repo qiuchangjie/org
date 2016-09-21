@@ -80,7 +80,7 @@ void Pipeline::InitPerspectiveProj(Matrix4f& m)const
 #+BEGIN_SRC C
 m_transformation = PersProjTrans * TranslationTrans *RotateTrans * ScaleTrans;
 #+END_SRC
-- 我们将透视投影矩阵作为整个变换矩阵计算中的第一项。谨记由于位置向量是乘在整个变换矩阵的右边的，所以实际上投影矩阵是最后发挥作用的，即首先进行缩放，之后进行旋转、然后是平移，最后进行投影变换。
+- *我们将透视投影矩阵作为整个变换矩阵计算中的第一项。谨记由于位置向量是乘在整个变换矩阵的右边的，所以实际上投影矩阵是最后发挥作用的，即首先进行缩放，之后进行旋转、然后是平移，最后进行投影变换。*
 #+BEGIN_SRC C
 p.SetPerspectiveProj(30.0f, WINDOW_WIDTH,WINDOW_HEIGHT, 1.0f, 1000.0f);
 #+END_SRC
