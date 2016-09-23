@@ -69,4 +69,4 @@ glDisableVertexAttribArray(0);
 - 当顶点不是要立即被使用的时候，禁用所有的顶点属性是一个很不错的方法。当着色器不使用顶点的时候将顶点属性激活，这是给自己自找麻烦。
 
 ** 操作结果
-- [[https://github.com/qiuchangjie/org/blob/master/%E7%8E%B0%E4%BB%A3OpenGL%E6%95%99%E7%A8%8B/pictures/picture02.jpg]]
+- [[file:pictures/picture02.jpg]]
