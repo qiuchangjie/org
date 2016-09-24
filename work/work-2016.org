@@ -36,6 +36,6 @@
 - [X] 连续加速带大喷停止不了 <2016-09-23 Fri>
 
 ** 问题总结
-- 工程中如果启用了抗锯齿， 使用了后期特效（例如动态模糊）*void OnRenderImage(RenderTexture src, RenderTexture dest)*会十分卡，通过查看profiler初步知道是GrabPixes函数耗时很长，并且是因为开启了抗锯齿才导致性能明显低下。
+- 工程中如果启用了抗锯齿， 使用了后期特效（例如动态模糊）void OnRenderImage(RenderTexture src, RenderTexture dest)会十分卡，通过查看profiler初步知道是GrabPixes函数耗时很长，并且是因为开启了抗锯齿才导致性能明显低下。
 - shader中如果使用了alphatest，则最终输出的颜色通道只有RGB，没有输出Alpha，导致小地图（或者其它使用情况下）会显示不了物体，解决办法：不使用alphatest，自己实现alpha值比较，用discard或者clip。
 - OnPreRender（在相机渲染场景之前被调用），OnPostRender（在相机完成场景渲染之后被调用）两个函数可绕过因为开了抗锯齿而导致OnRenderImage很慢的问题。
