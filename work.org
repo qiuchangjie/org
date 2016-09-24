@@ -1,6 +1,5 @@
 * 工作记录
-** <2016-09-08 Thu>
-*** 一起来飞车开发 [11/12]
+** 一起来飞车开发 [16/17]
 - [X] 资源释放不及时 [2/2]
   - [X] 场景背景音乐释放不及时 <2016-09-08 Thu>
   - [X] ResLoading背景图释放不及时 <2016-09-08 Thu>
@@ -25,6 +24,17 @@
   - [X] 比赛中竞速体验优化（车辆动作、人物动作），第二期；大喷镜头拉伸曲线调整 <2016-09-18 Sun>
 - [X] 背景音乐新需求 <2016-09-18 Sun>
 - [X] 优化AssetBundle加载类AssetBundleLoader加载速度（使用了AssetBundle.CreateFromMemoryImmediate同步函数导致卡帧，换成使用WWW.assetbundle和AssetBundle.CreateFromMemory方法） <2016-09-20 Tue>
-*** 解决bug记录
+- [X] 调整漂移后触发小喷的时机 <2016-09-22 Thu>
+- [X] 进入比赛切换背景音乐 <2016-09-23 Fri>
+- [X] 去掉抗锯齿 <2016-09-23 Fri>
+- [X] 比赛中存在两个AudioListener（一个在RaceMainCamera，一个在GlobalDelegate中），导致每一帧都会打印警告Log <2016-09-23 Fri>
+- [X] 香港地图有部分路面没有在小地图中出现 <2016-09-23 Fri>
+
+** 解决bug记录
 - [X] 解决台湾版本新车冲过终点后穿墙 <2016-09-14 Wed>
 - [X] 解决大喷连续释放两个的问题 <2016-09-20 Tue>
+- [X] 连续加速带大喷停止不了 <2016-09-23 Fri>
+
+** 问题总结
+- 工程中如果启用了抗锯齿， 使用了后期特效（例如动态模糊）*void OnRenderImage(RenderTexture src, RenderTexture dest)*会十分卡，通过查看profiler初步知道是GrabPixes函数耗时很长，并且是因为开启了抗锯齿才导致性能明显低下。
+- shader中如果使用了alphatest，则最终输出的颜色通道只有RGB，没有输出Alpha，导致小地图（或者其它使用情况下）会显示不了物体，解决办法：不使用alphatest，自己实现alpha值比较，用discard或者clip。
