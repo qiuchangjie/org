@@ -22,29 +22,27 @@ I * P=P（x,y,z）
 
 ** 代码
 #+BEGIN_SRC C
-structMatrix4f
+struct Matrix4f
 {
     float m[4][4];
 };
 #+END_SRC
 - 我们将一个 4*4 的矩阵定义添加到 math_3d.h 中。从现在起，它将被运用到大多数转变矩阵中。
 #+BEGIN_SRC C
-GLuintgWorldLocation;
+GLuint gWorldLocation;
 #+END_SRC
 - 我们使用这个句柄来获取着色器中的世界矩阵一致变量地址！我们称之为“世界”是因为我们所做的是，在我们的虚拟世界坐标系统中将一个物体移动（变换）到我们想要的位置。
 #+BEGIN_SRC C
-Matrix4fWorld;
+Matrix4f World;
 World.m[0][0] = 1.0f; World.m[0][1] =0.0f; World.m[0][2] = 0.0f; World.m[0][3] = sinf(Scale);
 World.m[1][0] = 0.0f; World.m[1][1] =1.0f; World.m[1][2] = 0.0f; World.m[1][3] = 0.0f;
 World.m[2][0] = 0.0f; World.m[2][1] =0.0f; World.m[2][2] = 1.0f; World.m[2][3] = 0.0f;
 World.m[3][0] = 0.0f; World.m[3][1] =0.0f; World.m[3][2] = 0.0f; World.m[3][3] = 1.0f;
 #+END_SRC
-
 - 在渲染函数中，我们创建了一个 4*4 矩阵并根据上面的推导对其进行初始化！我们设置 v2 和 v3 为 0，因为我们希望物体在 y、z 坐标上没有变化，我们将 v1 的值设置为 sin 函数的结果，Scale的值在每一帧中都是不断变化的，这使得 X 坐标的值会在 -1 到 1 的范围内波动。现在我们需要把矩阵加载到着色器中。
 #+BEGIN_SRC C
 glUniformMatrix4fv(gWorldLocation,1, GL_TRUE, &World.m[0][0]);
 #+END_SRC
-
 - 这是另外一个 glUniform 函数的例子，用来加载数据到着色器的一致变量中。这个特定的函数可以加载 4*4 的矩阵，也有用于加载 2*2, 3*3, 3*2, 2*4, 4*2, 3*4 和 4\3的版本。第一个参数是一致变量的位置（在着色器程序编译之后由 glGetUniformLocation() 函数返回的结果）。第二个参数代表我们更新的矩阵的数量。一个矩阵我们用 1，但是我们也可以调用这个函数一次更新多个矩阵。第三个参数很容易迷惑新手。它表明提供矩阵是按行优先还是列优先的! 关键在于 C/C++ 语言默认就是行优先的！这意味着当你给二维数组填充数据时，它们在内存中一行一行的排列，并且最上面的一行在低地址处！例如，看下面的数组：
 #+BEGIN_SRC C
 int a[2][3];
@@ -61,15 +59,12 @@ a[1][2]= 6;
 4 5 6
 #+END_SRC
 - 而在内存中的排列是这样的：1 2 3 4 5 6（1在最低地址）
-
 - 所以我们设定函数 glUniformMatrix4fv() 第三个参数是 GL_TRUE 是因为我们以行优先的方式提供矩阵的。我们也可以将第三个参数为 GL_FALSE，但是这样的话我们需要转置矩阵的值，因为 C/C++ 中内存的排列仍然是行优先，但是 OpenGL 将认为我们提供的前四个值实际上是一个矩阵的列，并做相应处理。第四个参数是矩阵在内存的开始地址！
-
 - 在着色器中的其余代码
 #+BEGIN_SRC C
 Uniform  mat4  gWorld;
 #+END_SRC
 - 这是一个 4*4 的矩阵类型的一致变量。也有 mat2 和 mat3。
-
 #+BEGIN_SRC C
 gl_Position= gWorld * vec4(Position, 1.0);
 #+END_SRC
