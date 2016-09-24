@@ -1,5 +1,7 @@
 /*
-   冒泡排序
+  Author: ChangJie.Qiu
+  Email: qiuchangjie@foxmail.com
+  冒泡排序
  */
 
 #include <iostream>

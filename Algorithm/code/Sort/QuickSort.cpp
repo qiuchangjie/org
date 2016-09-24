@@ -1,4 +1,6 @@
 /*
+  Author: ChangJie.Qiu
+  Email: qiuchangjie@foxmail.com
   快速排序
  */
 

@@ -1,3 +1,8 @@
+/*
+  Author: ChangJie.Qiu
+  Email: qiuchangjie@foxmail.com
+  排序基类
+ */
 #include "SortBase.h"
 
 void SortBase::Swap(int* a, int* b)
