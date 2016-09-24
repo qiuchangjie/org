@@ -1,0 +1,131 @@
+* 总结使用Unity 3D优化游戏运行性能的经验（转）
+流畅的游戏玩法来自流畅的帧率，而我们即将推出的动作平台游戏《Shadow Blade》已经将在标准iPhone和iPad设备上实现每秒60帧视为一个重要目标。
+以下是我们在紧凑的优化过程中提升游戏运行性能，并实现目标帧率时需要考虑的事项。
+当基本游戏功能到位时，就要确保游戏运行表现能够达标。我们衡量游戏运行表现的一个基本工具是Unity内置分析器以及Xcode分析工具。使用Unity分析器来分析设备上的运行代码真是一项宝贵的功能。
+我们总结了这种为将目标设备的帧率控制在60fps而进行衡量、调整、再衡量过程的中相关经验。
+[[http://gamerboom.com/wp-content/uploads/2013/09/shadow-bladefrom-deadmage.com_.jpg]]
+
+** 遇到麻烦时要调用“垃圾回收器”（Garbage Collector，无用单元收集程序，以下简称GC）
+由于具有C/C++游戏编程背景，我们并不习惯无用单元收集程序的特定行为。确保自动清理你不用的内存，这种做法在刚开始时很好，但很快你就公发现自己的分析器经常显示CPU负荷过大，原因是垃圾回收器正在收集垃圾内存。这对移动设备来说尤其是个大问题。要跟进内存分配，并尽量避免它们成为优先数，以下是我们应该采取的主要操作：
+- 1.移除代码中的任何字符串连接，因为这会给GC留下大量垃圾。
+- 2.用简单的“for”循环代替“foreach”循环。由于某些原因，每个“foreach”循环的每次迭代会生成24字节的垃圾内存。一个简单的循环迭代10次就可以留下240字节的垃圾内存。
+- 3.更改我们检查游戏对象标签的方法。用“if (go.CompareTag (“Enemy”)”来代替“if (go.tag == “Enemy”)” 。在一个内部循环调用对象分配的标签属性以及拷贝额外内存，这是一个非常糟糕的做法。
+- 4.对象库很棒，我们为所有动态游戏对象制作和使用库，这样在游戏运行时间内不会动态分配任何东西，不需要的时候所有东西反向循环到库中。
+- 5.不使用LINQ命令，因为它们一般会分配中间缓器，而这很容易生成垃圾内存。
+
+** 谨慎处理高级脚本和本地引擎C++代码之间的通信开销
+所有使用Unity3D编写的游戏玩法代码都是脚本代码，在我们的项目中是使用Mono执行时间处理的C#代码。任何与引擎数据的通信需求都要有一个进入高级脚本语言的本地引擎代码的调用。这当然会产生它自己的开销，而尽量减少游戏代码中的这些调用则要排在第二位。
+- 1.在这一情景中四处移动对象要求来自脚本代码的调用进入引擎代码，这样我们就会在游戏玩法代码的一个帧中缓存某一对象的转换需求，并一次仅向引擎发送一个请求，以便减少调用开销。这种模式也适用于其他相似的地方，而不仅局限于移动和旋转对象。
+- 2.将引用本地缓存到元件中会减少每次在一个游戏对象中使用 “GetComponent” 获取一个元件引用的需求，这是调用本地引擎代码的另一个例子。
+
+** 物理效果
+- 1.将物理模拟时间步设置到最小化状态。在我们的项目中就不可以将让它低于16毫秒。
+- 2.减少角色控制器移动命令的调用。移动角色控制器会同步发生，每次调用都会耗损极大的性能。我们的做法是缓存每帧的移动请求，并且仅运用一次。
+- 3.修改代码以免依赖“ControllerColliderHit” 回调函数。这证明这些回调函数处理得并不十分迅速。
+- 4.面对性能更弱的设备，要用skinned mesh代替physics cloth。cloth参数在运行表现中发挥重要作用，如果你肯花些时间找到美学与运行表现之间的平衡点，就可以获得理想的结果。
+- 5.在物理模拟过程中不要使用ragdolls，只有在必要时才让它生效。
+- 6.要谨慎评估触发器的“onInside”回调函数，在我们的项目中，我们尽量在不依赖它们的情况下模拟逻辑。
+- 7.使用层次而不是标签。我们可以轻松为对象分配层次和标签，并查询特定对象，但是涉及碰撞逻辑时，层次至少在运行表现上会更有明显优势。更快的物理计算和更少的无用分配内存是使用层次的基本原因。
+- 8.千万不要使用Mesh对撞机。
+- 9.最小化碰撞检测请求（例如ray casts和sphere checks），尽量从每次检查中获得更多信息。
+
+** 让AI代码更迅速
+我们使用AI敌人来阻拦忍者英雄，并同其过招。以下是与AI性能问题有关的一些建议：
+- 1.AI逻辑（例如能见度检查等）会生成大量物理查询。可以让AI更新循环设置低于图像更新循环，以减少CPU负荷。
+
+** 最佳性能表现根本就不是来自代码
+没有发生什么情况的时候，就说明性能良好。这是我们关闭一切不必要之物的基本原则。我们的项目是一个侧边横向卷轴动作游戏，所以如果不具有可视性时，就可以关闭许多动态关卡物体。
+- 1.使用细节层次的定制关卡将远处的敌人AI关闭。
+- 2.移动平台和障碍，当它们远去时其物理碰撞机也会关闭。
+- 3.Unity内置的“动画挑选”系统可以用来关闭未被渲染对象的动画。
+- 4.所有关卡内的粒子系统也可以使用同样的禁用机制。
+
+** 回调函数！那么空白的回调函数呢？
+要尽量减少Unity回调函数。即使敌人回调函数存在性能损失。没有必要将空白的回调函数留在代码库中（有时候介于大量代码重写和重构之间）。
+
+** 让美术人员来救场
+在程序员抓耳挠腮，绞尽脑汁去想该如何让每秒运行更多帧时，美术人员总能神奇地派上大用场。
+- 1.共享游戏对象材料，令其在Unity中处于静止状态，可以让它们绑定在一起，由此产生的简化绘图调用是呈现良好移动运行性能的重要元素。
+- 2.纹理地图集对UI元素来说尤其有用。 
+- 3.方形纹理以及两者功率的合理压缩是必不可少的步骤。 
+- 4.我们的美术人员移除了所有远处背景的网格，并将其转化为简单的2D位面。
+- 5.光照图非常有价值。
+- 6.我们的美术人员在一些关口移除了额外顶点。
+- 7.使用合理的纹理mip标准是一个好主意（游戏邦注：要让不同分辨率的设备呈现良好的帧率时尤其如此）。
+- 8.结合网格是美术人员可以发挥作用的另一个操作。
+- 9.我们的动画师尽力让不同角色共享动画。
+- 10.要找到美学/性能之间的平衡，就免不了许多粒子效果的迭代。减少发射器数量并尽量减少透明度需求也是一大挑战。
+
+** 要减少内存使用
+使用大内存当然会对性能产生负面影响，但在我们的项目中，我们的iPod由于超过内存上限而遭遇了多次崩溃事件。我们的游戏中最耗内存的是纹理。
+- 1.不同设备要使用不同的纹理大小，尤其是UI和大型背景中的纹理。《Shadow Blade》使用的是通用型模板，但如果在启动时检测到设备大小和分辨率，就会载入不同资产。
+- 2.我们要确保未使用的资产不会载入内存。我们必须迟一点在项目中找到仅被一个预制件实例引用，并且从未完全载入内存中实例化的资产。
+- 3.去除网格中的额外多边形也能实现这一点。
+- 4.我们应该重建一些资产的生周期管理。例如，调整主菜单资产的加载/卸载时间，或者关卡资产、游戏音乐的有效期限。
+- 5.每个关卡都要有根据其动态对象需求而量身定制的特定对象库，并根据最小内存需求来优化。对象库可以灵活一点，在开发过程中包含大量对象，但知道游戏对象需求后就要具体一点。
+- 6.保持声音文件在内存的压缩状态也是必要之举。
+加强游戏运行性能是一个漫长而具有挑战性的过程，游戏开发社区所分享的大量知识，以及Unity提供的出色分析工具为《Shadow Blade》实现目标运行性能提供了极大帮助。
+
+
+** “0 – 60 fps in 14 days!” What we learned trying to optimize our game using Unity3D. by Amir Fassihi
+
+The following blog post, unless otherwise noted, was written by a member of Gamasutra’s community.
+The thoughts and opinions expressed are those of the writer and not Gamasutra or its parent company.
+A smooth gameplay is built upon the foundations of a smooth frame rate and hitting the 60 frames per second target on the standard iPhone and iPad devices was a significant goal during the development of our upcoming action platformer game, Shadow Blade. (http://shadowblade.deadmage.com)
+The following is a summary from the things we had to consider and change in the game in order to increase the performance and reach the targeted frame rate during the intense optimization sessions.
+Once the basic game functionalities were in place, it was time to make sure the game performance would meet its target. Our main tool for measuring the performance was the built-in Unity profiler and the Xcode profiling tools. Being able to profile the running code on the device using the Unity profiler proved to be an invaluable feature.
+So here goes our summary and what we learned about the results of this intense measuring, tweaking and re-measuring journey which paid out well at the end and resulted in a fixed 60fps for our target devices.
+
+*** 1 – Head to head with a ferocious monster called the Garbage Collector.
+Coming from a C/C++ game programming background, we were not used to the specific behaviors of the garbage collector. Making sure your unused memory is cleaned up automatically for you is nice at first but soon the reality kicks in and you witness regular spikes in your profiler showing the CPU load caused by the garbage collector doing what it is supposed to do, collecting the garbage memory. This proved to be a huge issue specifically for the mobile devices. Chasing down memory allocations and trying to eliminate them became priority number one and here are some of the main actions we took:
+Remove any string concatenation in code since this leaves a lot of garbage for the GC to collect.
+Replace the “foreach” loops with simple “for” loops. For some reason, every iteration of every “foreach” loop generated 24 Bytes of garbage memory. A simple loop iterating 10 times left 240 Bytes of memory ready to be collected which was just unacceptable
+Replace the way we checked for game object tags. Instead of “if (go.tag == “Enemy”)” we used “if (go.CompareTag (“Enemy”)”. Calling the tag property on an object allocates and copies additional memory and this is really bad if such a check resides in an inner loop.
+Object pools are great, we made and used pools for all dynamic game objects so that nothing is ever allocated dynamically during the game runtime in the middle of the levels and everything is recycled back to the pool when not needed.
+Not using LINQ commands since they tended to allocate intermediate buffers, food for the GC.
+*** 2 – Careful with the communication overhead between high level scripts and native engine C++ code.
+All gameplay code written for a game using Unity3D is script code which in our case was C# that was handled using the Mono runtime. Any requirements to communicate with the engine data would require a call into the native engine code from the high level scripting language. This of course has its own overhead and trying to reduce such calls in game code was the second priority.
+Moving objects around in the scene requires calls from the script code to the engine code and we ended up caching the transformation requirements for an object during a frame in the gameplay code and sending the request to the engine only once to reduce the call overhead. This pattern was used in other similar places other than the needs to move and rotate an object.
+Caching references to components locally would eliminate the need to fetch a component reference using the “GetComponent” method on a game object every time which is another example for a call into the native engine code.
+*** 3 – Physics, Physics and more Physics.
+Setting the physics simulation timestep to the minimum possible. For our case we could not set it lower than 16 milliseconds. 
+Reducing calls to character controller move commands. Moving the character controller happens synchronously and every call can have a significant performance cost. What we did was to cache the movement requests per frame and apply them only once. 
+Modifying code to not rely on the “ControllerColliderHit” callbacks. It proved that these callbacks are not handled very quickly.
+Replacing the physics cloth with a skinned mesh for the weaker devices. The cloth parameters can play important roles in performance also and it pays off to spend some time to find the appropriate balance between aesthetics and performance.
+Ragdolls were disabled so that they were not part of the physics simulation loop and only enabled when necessary.
+“OnInside” callbacks of the triggers need to be assessed carefully and in our case we tried to model the logic without relying on them if possible.
+Layers instead of tags! Layers and tags can be assigned to objects easily and used for querying specific objects, however, layers have a definite advantage at least performance wise when it comes to working with collision logic. Quicker physics calculations and less unwanted newly allocated memory are the basic reasons.
+Mesh colliders are definitely a no-no.
+Minimize collision detection requests like ray casts and sphere checks in general and try to get as much information from each check.
+*** 4 – Let’s make the AI code faster!
+We use artificial intelligence for the enemies that try to block our main ninja hero and fight with him. The following topics needed to be covered regarding AI performance issues:
+A lot of physical queries are generated from AI logic like visibility checks. The AI update loop could be set to something much lower than the graphics update loop to reduce CPU load.
+*** 5 – Best performance is achieved from no code at ALL!
+When nothing happens, performance is good. This was the base philosophy for us to try and turn anything not necessary at the moment off. Our game is a side scroller action game and so a lot of the dynamic level objects can be turned off when they are not visible in the scene.
+Enemy AI was turned off when far away using a custom level of detail scheme.
+Moving platforms and hazards and their physics colliders were turned off when far away.
+Built in Unity “animation culling” system was used to turn off animations on objects not being rendered.
+Same disabling mechanism used for all in level particle systems.
+*** 6 – Callback! How about empty callbacks?
+The Unity callbacks needed to be reduced as much as possible. Even the empty callbacks had performance penalties. There is no reason for having empty callbacks but they just get left in the code base sometimes in between a lot of code rewrite and refactoring.
+*** 7 – The mighty Artists to the rescue.
+Artists can always magically help out the hair-pulling programmer trying to go for a few more frames per second.
+Sharing materials for game objects and making them static in Unity causes them to be batched together and the resulting reduced draw calls are critical for good mobile performance.
+Texture atlases helped a lot especially for the UI elements.
+Square textures and power of two with proper compression was a must.
+Being a side-scroller enabled our artists to remove all far background meshes and convert them to simple 2D planes instead.
+Light maps were highly valuable.
+Our artists removed extra vertices during a few passes.
+Proper texture mip levels were a good decision especially for having a good frame rate on devices with different resolutions.
+Combining meshes was another performance friendly action by the artists.
+Our animator tried to share animations between different characters if it was possible.
+A lot of iterations on the particles were necessary to find the aesthetic/performance balance. Reducing number of emitters and trying to reduce transparency requirements were among the major challenges.
+*** 8 – The memory usage needs to be reduced, now!
+Using a lot of memory of course has negative performance related effects but in our case we experienced a lot of crashes on iPods due to exceeding memory limits which was a much more critical problem. The biggest memory consumers in our game were the textures.
+Different texture sizes were used for different devices, especially textures used in UI and large backgrounds. Shadow Blade uses a universal build but different assets get loaded when the device size and resolution is detected upon startup.
+We needed to make sure un-used assets were not loaded in memory. We had to find out a little late in the project that any asset that was only referenced by an instance of a prefab and never instantiated was fully loaded in memory.
+Stripping out extra polygons from meshes helped.
+We needed to re-architect the lifecycle management of some assets a few times. For example tweaking the load/unload time for the main menu assets or end of level assets or game music.
+Each level needed to have its specific object pool tailored to its dynamic object requirements and optimized for the least memory needs. Object pools can be flexible and contain a lot of objects during development, however, they need to be specific once the game object requirements are known.
+Keeping the sound files compressed in memory was necessary.
+Game performance enhancement is a long and challenging journey and we had a fun time experiencing a small part of this voyage. The vast amount of knowledge shared by the game development community and very good profiling tools provided by Unity were what made us reach our performance targets for Shadow Blade.（source：gamasutra）
