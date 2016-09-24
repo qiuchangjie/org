@@ -20,7 +20,7 @@
     #include <stdio.h>
     int main()
     {
-      int a[100],i,j,t,n;
+        int a[100],i,j,t,n;
         scanf("%d",&n);  //输入一个数n，表示接下来有n个数
         for(i=1;i<=n;i++)  //循环读入n个数到数组a中
             scanf("%d",&a[i]);
@@ -61,7 +61,7 @@
         int i,j,n;
         scanf("%d",&n); //输入一个数n
         for(i=1;i<=n;i++) //循环读入n个人名和分数
-    scanf("%s %d",a[i].name,&a[i].score);
+        scanf("%s %d",a[i].name,&a[i].score);
         //按分数从高到低进行排序
         for(i=1;i<=n-1;i++)
         {
