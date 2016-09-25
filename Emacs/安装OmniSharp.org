@@ -1,0 +1,2 @@
+* 安装OmniSharp
+- 下载OmniSharp源码，编译完后，要吧OmniSharpServer.exe所在的路径设置到PATH环境变量中；vim，emacs对应的插件就能使用了。
