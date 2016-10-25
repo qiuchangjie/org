@@ -54,6 +54,7 @@
 - 工程开启了抗锯齿又想使用后期特效，可以把摄像机的内容渲染到RenderTexture上，然后对RenderTexture做后期特效，效率有明显提升。
 - shader中如果使用了alphatest，则最终输出的颜色通道只有RGB，没有输出Alpha，导致小地图（或者其它使用情况下）会显示不了物体，解决办法：不使用alphatest，自己实现alpha值比较，用discard或者clip。
 - OnPreRender（在相机渲染场景之前被调用），OnPostRender（在相机完成场景渲染之后被调用）两个函数可绕过因为开了抗锯齿而导致OnRenderImage很慢的问题。
+- 我们的工程中图标Icon和服装Cloth的AssetBundle名字一样（但是放在了不同的目录，在加载服装AssetBundle后不释放AssetBundle然后再加载同名的图标，会报错（提示：can't be loaded because another asset bundle with the same files are already），这是因为我们打包AssetBundle资源时加上了BuildAssetBundleOptions.DeterministicAssetBundle（在资源更新时，只有确保资源不会每次Build时都会产生不同的MD5值，才能确保资源的增量更新BuildPipeline.BuildAssetBundle  在build的时候添加一个选项 | BuildAssetBundleOptions.DeterministicAssetBundle 这样就能确保这份资源的唯一性），手动修改AssetBundle的名字还是不能解决，只能打包的时候指定不同的名字。 <2016-10-25 Tue>
 
 ** 内存优化总结 
 1. 合理规划图集
