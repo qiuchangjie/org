@@ -8,4 +8,4 @@
 *** TODO SkinMesh比赛中跳变
 *** TODO 对内存分配较高
 ** 问题记录
-*** 地图AssetBundle可能重复加载了，分别在SceneCommonRace.LoadScene和RaceManager.LoadStart
+*** TODO 地图AssetBundle可能重复加载了，分别在SceneCommonRace.LoadScene和RaceManager.LoadStart
