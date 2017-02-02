@@ -8,4 +8,10 @@
 *** TODO SkinMesh比赛中跳变
 *** TODO 对内存分配较高
 ** 问题记录
-*** TODO 地图AssetBundle可能重复加载了，分别在SceneCommonRace.LoadScene和RaceManager.LoadStart
+*** DONE 地图AssetBundle可能重复加载了，分别在SceneCommonRace.LoadScene和RaceManager.LoadStart
+CLOSED: [2017-02-02 Thu 11:59]
+*** DONE 影子回放抖动（原因：没有设置Rigibody的FreezeRotation）
+CLOSED: [2017-02-02 Thu 16:54]
+*** DONE AI赛车竖立（原因：因为赛车碰撞盒子坐标被偏移，导致重心偏移）
+CLOSED: [2017-02-02 Thu 16:55]
+*** TODO 赛车车身碰撞体被缩小，导致AI回放WheelCollider穿透到地面下，AI一直抖动
