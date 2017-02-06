@@ -14,4 +14,5 @@ CLOSED: [2017-02-02 Thu 11:59]
 CLOSED: [2017-02-02 Thu 16:54]
 *** DONE AI赛车竖立（原因：因为赛车碰撞盒子坐标被偏移，导致重心偏移）
 CLOSED: [2017-02-02 Thu 16:55]
-*** TODO 赛车车身碰撞体被缩小，导致AI回放WheelCollider穿透到地面下，AI一直抖动
+*** DONE 赛车车身碰撞体被缩小，导致AI回放弹簧组件SpringJoint和车轮相互力不平衡，AI一直抖动
+CLOSED: [2017-02-06 Mon 10:51]
