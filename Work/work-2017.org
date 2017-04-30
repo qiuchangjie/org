@@ -75,4 +75,6 @@ CLOSED: [2017-04-19 Tue 22:42]
 CLOSED: [2017-04-23 Sun 15:13]
 *** DONE 泰国风情地图全局灯光的CullingMask被设置成Everything，导致地图DrawCall飙升到300多，CullingMask设置成CarModel即可
 CLOSED: [2017-04-29 Sat 14:23]
+*** DONE RacerLOD实现比赛玩家LOD，比赛中其他玩家距离摄像机距离隐藏模型和特效
+CLOSED: [2017-04-30 Sun 21:51]
 *** TODO 抽离资源依赖的脚本（例如CarView等）
