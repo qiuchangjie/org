@@ -6,7 +6,7 @@
 *** TODO 开启了反走样，比较耗性能
 *** TODO 半透明比上个版本多
 *** TODO SkinMesh比赛中跳变
-*** TODO 对内存分配较高
+*** TODO 堆内存分配较高
 ** 问题记录
 *** DONE 地图AssetBundle可能重复加载了，分别在SceneCommonRace.LoadScene和RaceManager.LoadStart
 CLOSED: [2017-02-02 Thu 11:59]
@@ -77,5 +77,7 @@ CLOSED: [2017-04-23 Sun 15:13]
 CLOSED: [2017-04-29 Sat 14:23]
 *** DONE RacerLOD实现比赛玩家LOD，比赛中其他玩家距离摄像机距离隐藏模型和特效
 CLOSED: [2017-04-30 Sun 21:51]
-*** TODO 抽离资源依赖的脚本（例如CarView等）
-*** TODO Assetbundle使用不压缩方式打资源，通过高压缩算法自己实现压缩功能
+*** DONE 抽离资源依赖的脚本（例如CarView等），通过实现一个CarViewHolder（继承ScriptableObject）可以把赛车prefab和赛车参数数据打到一个assetbundle里面
+CLOSED: [2017-05-09 Tue 20:28]
+*** DONE Assetbundle使用不压缩方式打资源，通过高压缩算法自己实现压缩功能（结论：通过不压缩方式打包assetbundle然后用压缩软件压缩，空间节省不大，可能用其它压缩算法会有提升）
+CLOSED: [2017-05-09 Tue 20:31]
