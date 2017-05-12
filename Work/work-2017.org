@@ -81,3 +81,5 @@ CLOSED: [2017-04-30 Sun 21:51]
 CLOSED: [2017-05-09 Tue 20:28]
 *** DONE Assetbundle使用不压缩方式打资源，通过高压缩算法自己实现压缩功能（结论：通过不压缩方式打包assetbundle然后用压缩软件压缩，空间节省不大，可能用其它压缩算法会有提升）
 CLOSED: [2017-05-09 Tue 20:31]
+*** DONE 发现比赛结束后赛道资源没有释放干净，原因是：加载完赛道后，调用了Assetbundle.unload(false)没有释放干净，现在改成结束比赛后调用Assetbundle.unload(true)可以释放干净，但是由于bundle占用的内存在比赛中一直存在，所以内存峰值会比以前高10MB左右
+CLOSED: [2017-05-12 Fri 10:30]
