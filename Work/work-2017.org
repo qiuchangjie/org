@@ -83,5 +83,5 @@ CLOSED: [2017-05-09 Tue 20:28]
 CLOSED: [2017-05-09 Tue 20:31]
 *** DONE 发现比赛结束后赛道资源没有释放干净，原因是：加载完赛道后，调用了Assetbundle.unload(false)没有释放干净，现在改成结束比赛后调用Assetbundle.unload(true)可以释放干净，但是由于bundle占用的内存在比赛中一直存在，所以内存峰值会比以前高10MB左右
 CLOSED: [2017-05-12 Fri 10:30]
-*** DONE 发现比赛结束后赛车资源没有释放干净，原因是：SocketCtrl有个回调加了RaceManager.ConnectSuccess函数，比赛结束后没有减去该函数导致赛车资源一直处于引用的状态
+*** DONE 发现比赛结束后赛车资源没有释放干净，原因是：SocketCtrl有个回调加了RaceManager.OnConnectSuccess函数，比赛结束后没有减去该函数导致赛车资源一直处于引用的状态
 CLOSED: [2017-05-14 Sun 01:02]
