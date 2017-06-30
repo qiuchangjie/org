@@ -23,9 +23,9 @@
 + 注意：即使物体都使用了同样的模型，在batch后每一个物体都会创建一份模型对应的geometry,在新的Combined Mesh里。所以过多的batch会增加内存占用。例如场景里的树群就不适合Static Batch，而适合动态合并。
 + 实现方法:
   + (1)MeshRenderer勾选Batching Static： 勾了即可
-  + (2)代码中使用UnityEngine.StaticBatchingUtility实现(可以在任何平台调用):
+  + (2)代码中使用 *UnityEngine.StaticBatchingUtility* 实现(可以在任何平台调用):
     + 1)将所有要合并的静态物体(不须勾Batching Static)放入统一一个root
-    + 2)StaticBatchingUtility.Combine(root);
+    + 2) *StaticBatchingUtility.Combine(root);*
   + 之后就合并好了！
 + 区别：
   + 勾选Batching Static：
