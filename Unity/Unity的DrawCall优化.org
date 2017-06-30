@@ -1,0 +1,100 @@
+* DrawCall优化
+- DrawCall优化合并，即DrawCall Batching. 通过减少Draw call数 和对显卡性能的消耗来提高性能。
+
+一 Mesh Renderer
+分为Dynamic Batching和 Static Batching
+Dynamic Batching
+不需要任何操作，只要共享材质(即使是不同的Mesh模型也可以)，就会自动被合并。可以自由移动旋转。但有以下使用要求：
+(1) 模型文件共计点数不超过900。（重复使用同一个Mesh不计）
+(2) 单个物体可以不超过300点，Shader可以有法线UV。
+    但如果Shader使用了 UV0 UV1两套UV,或者Tangent切线的话，单个物体只能不超过180点
+(3)游戏对象使用相同模型和材质时，只有相同缩放(即xyz等比缩放,浮点尾数可以有细微差)的会被合并。
+如
+（1，1，1）与（1，1，1）
+（2，2，2）与（2，2，2）
+（0.5，0.5，0.5）与 （0.5，0.5，0.5）
+（2,2,2）与（2,2，2.0001）
+(4)场景烘焙：烘焙后同材质将不会被烘焙。lightmap 有隐藏的材质参数：offset/scale, 所以使用lightmap的物体不会被合并
+(5)Shader不能使用多Pass:多Pass的Shader会破坏Dynamic Batching
+
+Static Batching
+ 
+原理：
+运行游戏后将一组游戏对象的多个模型会被动态合并为1个。这组游戏对象所有使用同一材质的在一个DrawCall来完成。这些游戏对象运行后无法移动缩放旋转。但是Drawcall一定是最大化合并的，并且不受动态合并的诸多限制（见下文详述）。
+注意：即使物体都使用了同样的模型，在batch后每一个物体都会创建一份模型对应的geometry,在新的Combined Mesh里。所以过多的batch会增加内存占用。例如场景里的树群就不适合Static Batch，而适合动态合并。
+实现方法:
+(1)MeshRenderer勾选Batching Static： 勾了即可
+(2)代码中使用UnityEngine.StaticBatchingUtility实现(可以在任何平台调用):
+      1)将所有要合并的静态物体(不须勾Batching Static)放入统一一个root
+      2)StaticBatchingUtility.Combine(root);
+      之后就合并好了！
+区别：
+勾选Batching Static：
+完全自动合并,在MeshFilter里显示的是 Combined Mesh(root:scene)。合并后不能移动
+StaticBatchingUtility:
+合并到一个游戏对象下。合并后可以移动父节点游戏对象
+ 
+二 Skinned Mesh Renderer
+没有任何batching, 故不是人物的话尽量少用。
+注意：
+(1)修改Renderer.material将会创建一份新的material,应使用Renderer.sharedMaterial来保持材质公用。
+(2)可以使用Mesh.Optimize() 优化模型。导入模型不需要调用此接口，在导入模型至Unity3d时已自动处理。
+代码创建的模型有可能需要调用此接口来优化。
+ 
+三 合并要求对比
+要求   	动态	静态
+1 只能是MeshRenderer不能是SkinnedMeshRenderer	要求	要求
+2 Shader必须是单Pass	要求	不要求
+3 不能被场景烘焙（不能标注为Light map static）	要求	不要求
+4 网格模型文件总点数要求	要求	不要求
+5 网格模型单个文件点数要求	要求	不要求
+6 限制缩放	要求	不要求
+7 限制位移旋转	不要求	要求
+ 
+ 
+四 总结
+三种方式：
+1 动态合并
+    优点：
+        内存消耗小
+        可以自由位移旋转
+    缺点：
+        要求众多（）
+2 标记Light map static合并
+    优点：
+        最方便快捷，要求最少
+    缺点：
+        完全不能移动
+        内存有消耗
+        只能处理在Scene中默认放置的物体
+3 代码StaticBatchingUtility合并
+    优点：
+        方便快捷，要求少
+        可整体移动
+        可处理代码动态加载的场景或物体
+    缺点：
+        内存有消耗
+ 
+代码合并是要求最少的，并可以整体移动。而动态合并可以移动旋转，并做Animation动画。故推荐StaticBatchingUtility + 动态合并。
+ 
+ 
+五 场景制作建议
+美术人员在制作某场景时，尽量：
+静态物体：使用静态合并
+条件
+   1 用Mesh Renderer,也就是不绑定骨骼
+   2 不是Wrap循环UV的贴图，尽量合并到一张大图集
+方法
+   标注Batching Static即可
+ 
+动态物体：使用动态合并，动画可以用Unity的动画去做
+条件
+   1 无骨骼
+   2 不参与场景烘焙
+   3 相同物体相同缩放
+   4 模型点数小于300或180
+   5 模型文件总点数小于900
+   6 Shader单Pass
+方法
+   满足条件Unity自动优化
+(不满足动态合并要求的。场景动画可以用骨骼动画去做。但应尽量避免或者少的使用这种方式。因为没有Drawcall优化效率较低）
