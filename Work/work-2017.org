@@ -118,6 +118,7 @@ CLOSED: [2017-05-12 Fri 10:30]
 *** DONE 发现比赛结束后赛车资源没有释放干净，原因是：SocketCtrl有个回调加了RaceManager.OnConnectSuccess函数，比赛结束后没有减去该函数导致赛车资源一直处于引用的状态
 CLOSED: [2017-05-14 Sun 01:02]
 *** Camera.layerCullDistances可以设置不同层次的物体的摄像机裁剪距离
+*** 粒子系统Render下有不同的RenderMode 渲染模式，可以达到合并DrawCall
 *** TODO 整个游戏堆内存分配较高300KB每秒，待查明原因
 *** TODO 游戏网络模块有不合法堆内存分配，MemoryStream，BinaryReader没有复用
 *** TODO 胎痕位置可配置（目前胎痕跟随车轮碰撞体跟路面的接触点）
