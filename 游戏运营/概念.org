@@ -1,0 +1,6 @@
+* 游戏运营数据分析教程
+** 注册用户数
+** 最高同时在线 PCU（Peak Concurrent Users）
+** 平均同时在线 ACU（Average Concurrent Users）
+** 付费用户人均付费 ARPU（Average Revenue Per User）
+** 渗透率（付费率）
