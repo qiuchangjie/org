@@ -126,3 +126,5 @@ CLOSED: [2017-05-14 Sun 01:02]
 CLOSED: [2017-09-04 一 11:36]
 *** DONE 优化了Float加密类型，减少了堆内存开销，加密的算法中使用的BitConvert.GetBytes函数有堆内存开销，因此需要避免使用BitCovert.GetBytes，C#可以通过使用unsafe关键字声明函数中可以使用类似C++的指针
 CLOSED: [2017-09-04 一 11:38]
+*** DONE 赛车大黄蜂高模残留了VisibleDelegate脚本，导致依赖了CarView，把CarView打到了AssetBundle中，导致资源不兼容
+CLOSED: [2017-09-06 三 11:03]
