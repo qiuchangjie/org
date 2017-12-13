@@ -1,0 +1,171 @@
+* 一、词性的分类
+** 词类又叫词性，英语单词根据其在句子中的功用，可以分成十个大类。
+  - 1.名词 noun     n. student  学生
+  - 2.代词 pronoun pron. you 你
+  - 3.形容词 adjective adj. happy 高兴的
+  - 4.副词 adverb adv. quickly 迅速地
+  - 5.动词 verb v. cut 砍、割
+  - 6.数词 numeral num. three 三
+  - 7.冠词 article art. a 一个
+  - 8.介词 preposition prep. at 在...
+  - 9.连词 conjunction conj. and 和
+  - 10.感叹词 interjection interj. oh 哦
+  - *前六类叫实词，后四类叫虚词。*
+ 
+* 二、名词
+** 名词概论
+  - [[file:Images/mingci1.jpg]]
+** 名词复数的规则变化
+  - [[file:Images/mingci2.jpg]]
+** 名词的格
+  - 在英语中有些名词可以加“‘s”来表示所有关系，带这种词尾的名词形式称为该名词的所有格，如：a teacher’s book。名词所有格的规则如下：
+    - 1）单数名词词尾加“'s”，复数名词词尾没有s，也要加“'s”，如the boy‘s bag 男孩的书包，men’s room 男厕所。
+    - 2）若名词已有复数词尾-s ，只加“'”，如：the workers’ struggle工人的斗争。
+    - 3）凡不能加“'s”的名词，都可以用“名词+of +名词”的结构来表示所有关系，如：the title of the song 歌的名字。
+    
+* 三、代词
+** 代词pronoun简称pron是代替名词的一种词类。大多数代词具有名词和形容词的功能。英语中的代词，按其意义、特征及在句中的作用分为：人称代词、物主代词、指示代词、反身代词、相互代词、疑问代词、关系代词、连接代词和不定代词九种
+  - *人称代词的用法：*
+    - I saw her with them， at least， I thought it was her.
+    - 我看到她和他们在一起，至少我认为是她。（her做宾语，them做介词宾语，her作主补）
+    - a. -- Who broke the vase？--谁打碎了花瓶？
+    - b. -- Me.--我。（me作主语补语= It’s me.）
+  - *并列人称代词的排列顺序*
+    - 1) 单数人称代词并列作主语时，其顺序为：
+      - 第二人称 －> 第三人称 －> 第一人称you －> he/she； it -> I
+    - 2) 复数人称代词作主语时，其顺序为：
+      - 第一人称 －> 第二人称 －> 第三人称we－>you －>They
+  - *反身代词*
+    - 1) 
+    - [[file:Images/fshen1.jpg]]
+  - *指示代词*
+    - 指示代词分单数（this / that）和复数（these / those）两种形式，既可作限定词又可做代词，
+  - *疑问代词*
+    - 指人：who， whom， whose指物： what既可指人又可指物： which
+    - 代词比较辩异one， that和it
+    - one表示泛指，that和it 表示特指。that与所指名词为同类，但不是同一个，而it 与所指名词为同一个。
+    - I can‘t find my hat. I think I must buy one.(不定)
+    - The hat you bought is bigger than that I bought.(同类但不同个)
+    - I can’t find my hat. I don‘ t know where I put it.( 同一物)
+
+* 四、冠词
+** 冠词是印欧语系和闪含语系的诸语中，位于名词或名词词组之前或之后，在句子里主要是对名词起限定作用的词。冠词是一种虚词。
+  - *不定冠词* a (an)与数词one 同源，是“一个”的意思。
+  - *定冠词的用法*
+    - 定冠词the与指示代词this，that同源，有“那（这）个”的意思。
+    - 1）特指双方都明白的人或物：Take the medicine.把药吃了。
+    - 2）上文提到过的人或事： He bought a house. I’ve been to the house.
+    - 3）指世上独一物二的事物：the sun， the sky， the moon， the earth
+    - 4）单数名词连用表示一类事物，如：the dollar 美元；
+      - the fox 狐狸；或与形容词或分词连用，表示一类人：the rich 富人； the living 生者。
+    - 5）用在序数词和形容词最高级，及形容词only， very， same等前面：
+      - Where do you live？ I live on the second floor.你住在哪？我住在二层。
+    - 6）与复数名词连用，指整个群体：
+      - They are the teachers of this school.指全体教师)
+      - They are teachers of this school.(指部分教师)
+    - 7）表示所有，相当于物主代词，用在表示身体部位的名词前：
+      - She caught me by the arm..她抓住了我的手臂。
+    - 8）用在某些由普通名词构成的国家名称、机关团体、阶级、等专有名词前：
+      - the People‘s Republic of China中华人民共和国
+    - 9）用在表示乐器的名词之前：She plays the piano.她会弹钢琴。
+    - 10) 用在姓氏的复数名词之前，表示一家人：the Greens格林一家人 (或格林夫妇)
+    - 11) 用在惯用语中：
+      - in the day， in the morning (afternoon，evening)，the day after tomorrow
+      - the day before yesterday， the next morning，  in the sky (water，field，country)
+      - in the dark， in the rain， in the distance，   in the middle (of)，in the end，
+      - on the whole， by the way， go to the theatre
+  - *零冠词的用法*
+    - 冠词与形容词+名词结构
+    - 1) 两个形容词都有冠词，表示两个不同东西。
+      - He raises a black and a white cat.他养了一只黑猫和一只白猫。
+    - 2) 如后一个形容词无冠词，则指一物。
+      - He raises a black and white cat.他养了一只花猫。
+  - *冠词位置*
+    - 1) 不定冠词位置  不定冠词常位于名词或名词修饰语前。注意：
+      - a. 位于下列形容词之后： such，what，many，half，such an animal；   Many a man
+      - b. 当名词前的形容词被副词as， so， too， how， however， enough修饰时，不定冠词应放在形容词之后：It is as pleasant a day as I have ever spent.
+      - c. quite，rather与单数名词连用，冠词放在其后。但当rather，quite 前仍有形容词，不定冠词放其前后均可。如：quite a lot
+      - d. 在as，though 引导的让步状语从句中，当标语为形容词修饰的名词时，不定冠词放形容词后： Brave a man though he is，he trembles at the sight of snakes. 
+        - 当名词被比较级形容词修饰时，不定冠词通常置于比较级形容词之后。
+    - 2) 定冠词位置  定冠词通常位于名词或名词修饰语前，但放在all， both，double，half，twice，three times等词之后，名词之前。
+      - All the students in the class went out.班里的所有学生都出去了。
+      
+* 五、数词
+** 表示数目多少的数词叫基数词；表示顺序的数词叫序数词。
+  - *数词的用法*
+  - 1）倍数表示法
+    - a. 主语+谓语+倍数（或分数）+ as + adj. + as
+      - I have three times as many as you.我有你三倍那么多。
+    - b. 主语+谓语+倍数（分数）+ the size (amount，length…) of…
+      - The earth is 49 times the size of the moon.地球是月球的49倍。
+    - c. 主语+谓语+倍数（分数）+ 形容词（副词）比较级+ than…
+      - The grain output is 8 percent higher this year than that of last year.
+    - d. 还可以用by+倍数，表示增加多少倍
+      - The production of grain has been increased by four times this year.
+  - 2）分数表示法
+    - 构成：基数词代表分子，序数词代表分母。分子大于1时，分子的序数词用单数，分母序数词用复数：1/3 one-third ； 3/37 three and three-sevenths
+    
+* 六、形容词及其用法
+** 形容词(adjective)，简称adj.或a.，很多语言中均有的主要词类中的一种。主要用来修饰名词的词，表示事物的特征。形容词用来修饰名词或代词，表示人或事物的性质、状态，和特征的程度好坏，与否。
+  - 形容词作定语修饰名词时，要放在名词的前边。但是如果形容词修饰以-thing为字尾的词语时，要放在这些词之后，例如：
+    - something nice
+  - 以-ly结尾的形容词
+    - 1）friendly，deadly，lovely，lonely，likely，lively，ugly，brotherly，仍为形容词。
+    - 2）有些以-ly 结尾既为形容词，也为副词。
+      - daily，weekly，monthly，yearly，early
+      - The Times is a daily paper. The Times is published daily.
+  - 用形容词表示类别和整体
+    - 某些形容词加上定冠词可以泛指一类人，与谓语动词的复数连接。如：the dead，the living，the rich，the poor，the blind，the hungry
+  - 多个形容词修饰名词的顺序
+    - 限定词--数词--描绘词--(大小，长短，形状，新旧，颜色) --出处--材料性质，类别--名词
+    - a small round table；a tall gray building；a dirty old brown shirt；a famous German medical school
+    
+* 七、副词及其基本用法
+** 副词（adverb，简写为adv）是一种用来修饰动词、形容词、全句的词，说明时间、地点、程度、方式等概念的词。副词是一种半虚半实的词。副词可分为：地点副词、方式副词、程度副词、疑问副词和连接副词。
+  - 副词的排列顺序：
+    - 时间，地点副词，小单位的在前，大单位在后。
+    - 注意：副词enough要放在形容词的后面，形容词enough放在名词前后都可。
+    - I don’t know him well enough.
+    - There is enough food for everyone to eat. There is food enough for everyone to eat.
+  - 兼有两种形式的副词
+    - 1) close与closely
+      - close意思是“近”； closely 意思是“仔细地”
+      - He is sitting close to me.     Watch him closely.
+    - 2)late 与lately
+      - late意思是“晚”； lately 意思是“最近”
+      - You have come too late.             What have you been doing lately？
+  - 形容词与副词的比较级
+  
+* 八、动词
+** 动词根据其后是否带有宾语，可分为两类，分别是：及物动词（Transitive Verb）、不及物动词（Intransitive Verb），缩写形式分别为vt. 和vi.。
+  - 在英语中按动词后可否直接跟宾语，可以把动词分成两种：及物动词与不及物动词。 及物动词 vt. 字典里词后标有vi. 的就是不及物动词。不及物动词后不能直接跟有动作的对象（即宾语）。若要跟宾语，必须先在其后添加上某个介词，如to，of ，at后方可跟上宾语。 及物动词： 又称“他动词”。又称“外动词”。动词的一种。它所表示的动作常涉及动作者以外的事物，如“吃”、“穿”、“读”、“写”等。字典里词后标有vt. 的就是及物动词。及物动词后必须跟有动作的对象（即宾语），并且可直接跟宾语。
+  - 不及物动词：字典里词后标有vi. 的就是不及物动词。不及物动词后不能直接跟有动作的对象（即宾语）。若要跟宾语，必须先在其后添加上某个介词，如to，of ，at后方可跟上宾语。具体每个动词后究竟加什么介词就得联系动词短语了
+  - 系动词
+    - 1）状态系动词：用来表示主语状态，只有be一词，例如：He is a teacher.
+    - 2）持续系动词：用来表示主语继续或保持一种状况或态度，主要有keep， rest， remain， stay， lie， stand， 例如：He always kept silent at meeting.他开会时总保持沉默。
+    - 3）表像系动词：用来表示“看起来像”这一概念，主要有seem， appear， look， 例如：
+      - He looks tired.他看起来很累。
+    - 4）感官系动词：感官系动词主要有feel， smell， sound， taste， 例如：
+      - This kind of cloth feels very soft.     This flower smells very sweet.
+    - 5）变化系动词：这些系动词表示主语变成什么样，变化系动词有become， grow， turn， fall， get， go， come， run.    例如：He became mad after that.自那之后，他疯了。
+    - 6）终止系动词：表示主语已终止动作，主要有prove， turn out， 表达“证实”，“变成”之意，例如：The search proved difficult.搜查证实很难。
+    
+* 九、连词
+** 连词是一种虚词， 它不能独立担任句子成分而只起连接词与词，短语与短语以及句与句的作用。连词主要可分为两类：并列连词和从属连词。并列连词用来连接平行的词、词组和分句。如：and， but， or， nor， so， therefore， yet， however， for， hence， as well as， both…and， not only…but also， either…or， neither…nor， (and)then等等。
+  - not…but… 意思为“不是……而是……” not 和but 后面的用词要遵循一致原则。
+    - They were not the bones of an animal， but (the bones) of a human being.
+  - 比较so和 such
+    - 其规律由so与such的不同词性决定。such 是形容词，修饰名词或名词词组，so是副词，只能修饰形容词或副词。so 还可与表示数量的形容词many，few，much， little连用，形成固定搭配。
+    - so + adj.  such + a(n) + n.
+    - so + adj. + a(n) + n.   such + n. (pl.)
+    - so + adj. + n. (pl.)   such +n. (pl.)
+    - so + adj. + n. [不可数]   such +n. [不可数]
+    - so foolish ；such a fool       so nice a flower；such a nice flower
+    - so many/ few flowers；such nice flowers     so much/little money；such rapid progress
+    - so many people ；such a lot of people
+    
+* 十、介词
+** 介词是一种用来表示词与词、词与句之间的关系的虚词，在句中不能单独作句子成分。介词后面一般有名词代词或相当于名词的其他词类，短语或从句作它的宾语。介词和它的宾语构成介词词组，在句中作状语，表语，补语或介词宾语。介词可以分为时间介词、地点介词、方式介词、原因介词和其他介词，
+  - *概念：*
+    - 1）介词（是prepositions，简称prep)，又称前置词，是英语中最活跃的词类之一，连接主语和表语。特别是一些常用介词的搭配力特别强，可以用来表示各种不同的意思。英语里大部分习语都是由介词和其他词构成的。介词在句中一般不重读。在定语从句“介词+who/which”的结构中，不能用that 代替who/which。She is a good student from who we should learn.
+    - 2）介词的种类 介词分简单介词和短语介词两种，简单介词及单个介词，如 in ，under ，on ，for ，after ，等，短语介词指多个单词构成的介词，如in front of ，out of ，instead of ，far from ，apart from 等。
