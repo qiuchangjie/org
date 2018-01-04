@@ -1,0 +1,16 @@
+* 一起来飞车
+** 网上收集的资料
+- =*Unity5的WheelCollider推不动的解决办法*=
+  - On further research, this seems to be a known issue with the WheelColliders in Unity 5.
+  - See these forum posts:
+  - http://forum.unity3d.com/threads/unityfs-flight-simulation-toolkit.171604/page-8
+  - http://forum.unity3d.com/threads/unity-5-wheelcollider-component-is-unusable.307099/
+  - There is a simple workaround though: Create an Awake() function that gives the wheels a non-zero motor torque and they will spin freely. 
+  - This is low enough that the vehicle won't start driving away but apparently enough that the wheels will turn freely.
+#+BEGIN_SRC C++
+void Awake()
+{
+    foreach (WheelCollider w in GetComponentsInChildren<WheelCollider>()) 
+        w.motorTorque = 0.000001f;
+}
+#+END_SRC
