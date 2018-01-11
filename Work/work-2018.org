@@ -14,3 +14,8 @@ void Awake()
         w.motorTorque = 0.000001f;
 }
 #+END_SRC
+** 升级Unity5问题记录
++ 车行驶过程中偶尔会出现抖动，因为前轮的前向摩擦力不为0，wheelcollider的前向摩擦力设置为0才能平衡行驶
++ 车的摩擦力不能配置过大，以前车路侧向摩擦力设置为300会导致车飞来飞去的，现在暂时调成1，能稳定行驶
++ 因为新版的WheelCollider的落地点跟旧版本不一样，导致车轮嵌进地里，车轮落地位置的计算需要做调整
++ 当wheelcollider的motoTorque为0时，通过给rigidbody添加力无法推动车子，所以必须给wheelcollider赋一个足够小的值（车是静止的，并且通过给rigidbody添加力能推动车子）
