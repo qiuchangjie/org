@@ -1,0 +1,25 @@
+* Unity关于LoadFromCacheOrDownload
+** 初衷是想研究下u3d的热更新资源，所以看到这个api， 本来想用它来做，但是后来发现一些新问题，就改用别的方案了，具体细节会另开一篇文章，这里只单说下LoadFromCacheOrDownload它自己
++ =*(1)函数功能：用来从服务器下载资源，并且保存在本地高速缓存，下次资源没改变的情况下从高速缓存读取*=
++ =*(2)参数：*=
+  + *url：资源地址*
+  + *version:资源版本*
+    + 只要版本号改变（无论增大还是减小），就会重新下载
+  + *crc：资源校验码*
+    + 1.crc是用来校验文件是否改变或损坏，每一个文件都有一个crc码
+    + 2.当第一次下载资源时，会用当前的crc和服务器上的资源做crc校验，如果不同，则返回下载失败，相同才下载
+    + 3.当本地有当前资源的缓存时，并且版本号没变的情况下，会和本地的资源做crc校验，如是不同（损坏或下载了不完整的资源），会重新去服务器下载资源
+    + 4.当crc为0时，则不校验
+    + 5.crc是在打包assetbundle时生成的（官方说是32位的crc码，但用通用的32位crc算法自己生成文件校码后，发现和u3d生成的不同，应该u3d自己换了算法或换了码表，4.2以后的版本打包才有，所以之前的版本只能传0）
+  + *打包时的crc生成，4.2版本没有crc参数*
+#+BEGIN_SRC C++
+    uint crc = 0;
+    BuildPipeline.BuildAssetBundle(Selection.activeObject, selection, path, out crc , BuildAssetBundleOptions.CollectDependencies | BuildAssetBundleOptions.CompleteAssets, BuildTarget.StandaloneWindows);
+#+END_SRC
+
++ =*(3)其它说明*=
+  + 下载后的高速缓存会存在各系统的沙箱目录下Application.persistentDataPath
+  + PC的是C:\Users\用户名\AppData\LocalLow\Unity\WebPlayer\Cache\CompanyName_ProductName
+  + 每个版本会下载对应的缓存文件夹
+  + 每份缓存由__info和CAB-XXXX组成
+  + __info中记录的应该是当前资源的版本号，CAB-XXXX应该就是缓存文件了，本地有缓存时就应该是和它做crc校验了，当CAB-XXXX被改变时（可以人为破坏），crc校验失败，就会重新从服务器下载新的资源
