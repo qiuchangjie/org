@@ -1,0 +1,32 @@
+* windows下的.emacs文件配置
+** 存放路径（以win7为例）
++ C:\Users\Administrator\AppData\Roaming\.emacs
+** 文件内容（以win7为例）
+#+BEGIN_SRC emacs-lisp
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+;(package-initialize)
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family #("微软雅黑" 0 4 (charset chinese-gbk)) :foundry "outline" :slant normal :weight normal :height 120 :width normal)))))
+
+;; spcemacs
+(setenv "HOME" "D:/emacs-25.2-x86_64/") 
+(setq spacemacs-start-directory "~/spacemacs/") ;;~代指重定义后的emacs的HOME路径 
+(load-file (concat spacemacs-start-directory "init.el"))
+
+;; normal emacs
+;(setenv "HOME" "D:/emacs-25.2-x86_64/") ;; you can change this dir to the place you like
+;(load "~/.emacs.d/init.el") ;;~代指重定义后的emacs的HOME路径 
+#+END_SRC
