@@ -19,3 +19,28 @@ void Awake()
 + 车的摩擦力不能配置过大，以前车路侧向摩擦力设置为300会导致车飞来飞去的，现在暂时调成1，能稳定行驶
 + 因为新版的WheelCollider的落地点跟旧版本不一样，导致车轮嵌进地里，车轮落地位置的计算需要做调整
 + 当wheelcollider的motoTorque为0时，通过给rigidbody添加力无法推动车子，所以必须给wheelcollider赋一个足够小的值（车是静止的，并且通过给rigidbody添加力能推动车子）
++ 当使用WWW.LoadFromCacheOrDownload加载assetbundle时，不能访问www.bytes等接口，不然会报错"WWWCached data can only be accessed using the assetBundle property!"
+  + 使用WWW.LoadFromCacheOrDownload加载assetbundle时，出现神奇的问题，UIMainScene.OnEnable被调用2次，其它static对象被置为null
++ 相同名字相同后缀的两个不同资源放在不同的目录下，分别打成assetbundle，如果加载两个资源会包重复加载assetbundle，这是Unity的问题
+  + The asset bundle '' can't be loaded because another asset bundle with the same files are already loaded create scene assetbundle Scenes/battle/MapEditor/53.unityin _LoadImmediate failed
+  + 可能的原因
+  + 相同名字 bundle load 加载后
+  + http://forum.unity3d.com/threads/asset-bundle-cant-be-the-same-name.190275
+  + 这里经过测试过 发现相同名字不同后缀的单个资源 bundle 是可以的
+  + 但是相同名字相同后缀即使路径不同也是不可以的
+  + ab重复加载
+
+** 飞车页游第一版本任务（对应国内1.6版本）
++ 资源相关[4/7]
+  + [X] 调整所有资源的打包assetbundle的压缩格式（使用LZ4压缩格式，webgl不支持多线程，lzma压缩的bundle会导致主线程解压缩时的卡顿）
+  + [X] 调整所有资源的加载assetbundle方式
+  + [X] UI的音效打成assetbundle
+  + [X] AI加载方式调整（主要是路径不对）
+  + [ ] 赛道拆解打包assetbundle
+    + 尝试方案1：路面网格、空气墙、赛道所有贴图作为赛道基础bundle，其它周边景物拆成多个bundle
+    + 制定调整规范，方便拆分，让各块大小尽可能相等
+  + [ ] 赛道拆解加载assetbundle
+  + [ ] 比赛中的Skidmark使用bundle方式打包和加载
+  + [ ] 比赛中的特效、道具打包和加载assetbundle
+  + [ ] 比赛中的UI打包和加载assetbundle
+    + CarBloodHUD这个prefab依赖了图集，后续要依赖打包图集
