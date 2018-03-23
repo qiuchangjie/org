@@ -29,18 +29,20 @@ void Awake()
   + 这里经过测试过 发现相同名字不同后缀的单个资源 bundle 是可以的
   + 但是相同名字相同后缀即使路径不同也是不可以的
   + ab重复加载
++ 切换场景闪退，查看错误栈，错误信息没有明显报出是哪里的逻辑报错，最后查到了原因：是秘宝模块的UI通过bundle加载，然后没有实例化bundle对象，把bundle当成已经实例化的对象挂到了主场景UI上，当主场景UI销毁时就导致了Crash
 
 ** 飞车页游第一版本任务（对应国内1.6版本）
-+ 资源相关[4/7]
++ 资源相关[9/9]
   + [X] 调整所有资源的打包assetbundle的压缩格式（使用LZ4压缩格式，webgl不支持多线程，lzma压缩的bundle会导致主线程解压缩时的卡顿）
   + [X] 调整所有资源的加载assetbundle方式
   + [X] UI的音效打成assetbundle
   + [X] AI加载方式调整（主要是路径不对）
-  + [ ] 赛道拆解打包assetbundle
+  + [X] 赛道拆解打包assetbundle
     + 尝试方案1：路面网格、空气墙、赛道所有贴图作为赛道基础bundle，其它周边景物拆成多个bundle
     + 制定调整规范，方便拆分，让各块大小尽可能相等
-  + [ ] 赛道拆解加载assetbundle
-  + [ ] 比赛中的Skidmark使用bundle方式打包和加载
-  + [ ] 比赛中的特效、道具打包和加载assetbundle
-  + [ ] 比赛中的UI打包和加载assetbundle
+  + [X] 赛道拆解加载assetbundle
+  + [X] 比赛中的Skidmark使用bundle方式打包和加载
+  + [X] 比赛中的特效、道具打包和加载assetbundle
+  + [X] 比赛中的UI打包和加载assetbundle
     + CarBloodHUD这个prefab依赖了图集，后续要依赖打包图集
+      
