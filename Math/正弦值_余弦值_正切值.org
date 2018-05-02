@@ -1,0 +1,12 @@
+* 正弦值，余弦值和正切值
+- [[file:images/triangle.jpg]]
+
+** 正弦：在Rt△ABC中，∠C=90°，我们把锐角A的对边与斜边的比叫做∠A的正弦（sine），记作sinA，即
+*** sinA=∠A的对边/斜边=a/c
+** 余弦：我们把∠A的邻边与斜边的比叫做∠A的余弦（cosine），记作cosA，即
+*** cosA=∠A的邻边/斜边=b/c
+** 正切：把∠A的对边与邻边的比叫做∠A的正切（tangent），记作tanA，即
+*** tanA=∠A的对边/∠A的邻边=a/b
+** 其它公式
+*** tanA=sinA/cosA
+*** (sinA)^2 + (cosA)^2 = 1 即：(a/c)^2 + (b/c)^2 = (a^2 + b^2) / (c^2) = 1
