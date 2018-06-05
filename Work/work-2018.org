@@ -48,3 +48,24 @@ void Awake()
   
 ** 物理公式
 + 由于我们游戏通过配置引擎推力曲线配置加速，无法直观的得出加速到最高速度时要话多少时间，经过实验验证PhysiX遵循牛顿定理： 力=质量*加速度 即 F=M*A
+
+** 技术方案
++ 路面材质实现方式（参考Q飞）：通过发射线检测路面的顶点颜色来检测路面材质，不同颜色对应不同的材质，这需要美术同学往路面网格里添加顶点颜色；
++ 检测代码如下
+#+BEGIN_SRC C++
+void CheckRoad()
+{
+    RaycastHit _surfaceHit;
+    if (Physics.Raycast(_groundCastPoints[i], -theKart.rotator.up, out _surfaceHit, _groundCastDistance, _groundCastLayer))
+    {
+        MeshFilter meshFilter = _surfaceHit.transform.GetComponent<MeshFilter>();
+        Mesh mesh = null != meshFilter ? meshFilter.mesh : null;
+        Collider hitCollider = _surfaceHit.collider;
+        if (null != mesh)
+        {
+            int verIndex = mesh.triangles[_surfaceHit.triangleIndex * 3];
+            Color hitColor = mesh.colors[verIndex];
+        }
+    }
+}
+#+END_SRC
