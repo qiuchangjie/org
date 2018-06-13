@@ -61,7 +61,7 @@ void CheckRoad()
         MeshFilter meshFilter = _surfaceHit.transform.GetComponent<MeshFilter>();
         Mesh mesh = null != meshFilter ? meshFilter.mesh : null;
         Collider hitCollider = _surfaceHit.collider;
-        if (null != mesh)
+        if (null != mesh && mesh.isReadble && mesh.colors.Lenght > 0)
         {
             int verIndex = mesh.triangles[_surfaceHit.triangleIndex * 3];
             Color hitColor = mesh.colors[verIndex];
