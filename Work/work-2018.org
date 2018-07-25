@@ -76,3 +76,19 @@ void CheckRoad()
 }
 #+END_SRC
 + 自动生成路径点（参考Q飞）：通过FBXSDK开发Unity插件读取Fbx文件中的样条曲线顶点坐标，然后根据样条曲线顶点坐标自动生成路径点，由于fbx中的坐标所处的坐标系是右手坐标系，Unity是左手坐标系，从FBX中读出来的坐标需要转换，转换成Unity坐标的方法为：Y坐标和Z坐标调换，然后对X坐标和Z坐标取反；
+ 
+** 飞车2主要组件的作用说明
++ *赛车上面的Component*
+  + Kart.cs: 赛车物理主逻辑
+  + KartWheel.cs: 赛车车轮设置
+  + TireMarkCreate.cs: 车轮胎痕逻辑
+  + KartInputPlayer.cs: 处理玩家输入
+  + KartAudio.cs: 处理赛车音效
+  + KartEffects.cs: 处理赛车特效
+  + KartRacingLogic.cs: 赛车比赛主逻辑(包括碰撞处理及接入道具等逻辑)
+  + WaypointChecker.cs: 赛车路径点逻辑
+  + KartSyncDataSender.cs: 主要负责赛车同步包发送
+  + KartSyncDataReceiver.cs: 主要负责赛车同步包接收
++ *赛道上的Component*
+  + TrackPath.cs: 赛道主脚本
+  + TrackPoint.cs: 赛道路径点脚本
