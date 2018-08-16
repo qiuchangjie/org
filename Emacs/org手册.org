@@ -1,7 +1,7 @@
 #+TITLE: Org-Manual 7.8
-#+AUTHOR: DarkSun [[https://github.com/marboo/orgmode-cn][作者 github 地址]]
+#+AUTHOR: DarkSun
 #+OPTIONS: ^:{}
-* 总介
+* 总介 ([[https://github.com/marboo/orgmode-cn][作者 github 地址]])
 ** 摘要            : org 大概能够做什么的摘要
    Org 是一种通过纯文本方式来快速而有效地记录笔记,处理待办列表,做项目计划的 mode.
    
