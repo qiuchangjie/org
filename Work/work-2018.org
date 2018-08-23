@@ -1,12 +1,12 @@
 * 一起来飞车
 ** 网上收集的资料
-- =*Unity5的WheelCollider推不动的解决办法*=
-  - On further research, this seems to be a known issue with the WheelColliders in Unity 5.
-  - See these forum posts:
-  - http://forum.unity3d.com/threads/unityfs-flight-simulation-toolkit.171604/page-8
-  - http://forum.unity3d.com/threads/unity-5-wheelcollider-component-is-unusable.307099/
-  - There is a simple workaround though: Create an Awake() function that gives the wheels a non-zero motor torque and they will spin freely. 
-  - This is low enough that the vehicle won't start driving away but apparently enough that the wheels will turn freely.
++ =*Unity5 的 WheelCollider 推不动的解决办法*=
+  + On further research, this seems to be a known issue with the WheelColliders in Unity 5.
+  + See these forum posts:
+  + http://forum.unity3d.com/threads/unityfs-flight-simulation-toolkit.171604/page-8
+  + http://forum.unity3d.com/threads/unity-5-wheelcollider-component-is-unusable.307099/
+  + There is a simple workaround though: Create an Awake() function that gives the wheels a non-zero motor torque and they will spin freely. 
+  + This is low enough that the vehicle won't start driving away but apparently enough that the wheels will turn freely.
 #+BEGIN_SRC C++
 void Awake()
 {
@@ -14,49 +14,52 @@ void Awake()
         w.motorTorque = 0.000001f;
 }
 #+END_SRC
-** 升级Unity5问题记录
-+ 车行驶过程中偶尔会出现抖动，因为前轮的前向摩擦力不为0，wheelcollider的前向摩擦力设置为0才能平衡行驶
-+ 车的摩擦力不能配置过大，以前车路侧向摩擦力设置为300会导致车飞来飞去的，现在暂时调成1，能稳定行驶
-+ 因为新版的WheelCollider的落地点跟旧版本不一样，导致车轮嵌进地里，车轮落地位置的计算需要做调整
-+ 当wheelcollider的motoTorque为0时，通过给rigidbody添加力无法推动车子，所以必须给wheelcollider赋一个足够小的值（车是静止的，并且通过给rigidbody添加力能推动车子）
-+ 当使用WWW.LoadFromCacheOrDownload加载assetbundle时，不能访问www.bytes等接口，不然会报错"WWWCached data can only be accessed using the assetBundle property!"
-  + 使用WWW.LoadFromCacheOrDownload加载assetbundle时，出现神奇的问题，UIMainScene.OnEnable被调用2次，其它static对象被置为null
-+ 相同名字相同后缀的两个不同资源放在不同的目录下，分别打成assetbundle，如果加载两个资源会包重复加载assetbundle，这是Unity的问题
+** 升级 Unity5 问题记录
++ 车行驶过程中偶尔会出现抖动，因为前轮的前向摩擦力不为 0，wheelcollider 的前向摩擦力设置为 0 才能平衡行驶
++ 车的摩擦力不能配置过大，以前车路侧向摩擦力设置为 300 会导致车飞来飞去的，现在暂时调成 1，能稳定行驶
++ 因为新版的 WheelCollider 的落地点跟旧版本不一样，导致车轮嵌进地里，车轮落地位置的计算需要做调整
++ 当 wheelcollider 的 motoTorque 为 0 时，通过给 rigidbody 添加力无法推动车子，所以必须给 wheelcollider 赋一个足够小的值（车是静止的，并且通过给 rigidbody 添加力能推动车子）
++ 当使用 WWW.LoadFromCacheOrDownload 加载 assetbundle 时，不能访问 www.bytes 等接口，不然会报错"WWWCached data can only be accessed using the assetBundle property!"
+  + 使用 WWW.LoadFromCacheOrDownload 加载 assetbundle 时，出现神奇的问题，UIMainScene.OnEnable 被调用 2 次，其它 static 对象被置为 null
++ 相同名字相同后缀的两个不同资源放在不同的目录下，分别打成 assetbundle，如果加载两个资源会包重复加载 assetbundle，这是 Unity 的问题
   + The asset bundle '' can't be loaded because another asset bundle with the same files are already loaded create scene assetbundle Scenes/battle/MapEditor/53.unityin _LoadImmediate failed
   + 可能的原因
   + 相同名字 bundle load 加载后
   + http://forum.unity3d.com/threads/asset-bundle-cant-be-the-same-name.190275
   + 这里经过测试过 发现相同名字不同后缀的单个资源 bundle 是可以的
   + 但是相同名字相同后缀即使路径不同也是不可以的
-  + ab重复加载
-+ 切换场景闪退，查看错误栈，错误信息没有明显报出是哪里的逻辑报错，最后查到了原因：是秘宝模块的UI通过bundle加载，然后没有实例化bundle对象，把bundle当成已经实例化的对象挂到了主场景UI上，当主场景UI销毁时就导致了Crash
+  + ab 重复加载
++ 切换场景闪退，查看错误栈，错误信息没有明显报出是哪里的逻辑报错，最后查到了原因：是秘宝模块的 UI 通过 bundle 加载，然后没有实例化 bundle 对象，把 bundle 当成已经实例化的对象挂到了主场景 UI 上，当主场景 UI 销毁时就导致了 Crash
+ 
+** 升级 Unity2018 问题记录
++ 用 unity2017 创建了工程后，再用 unity2018 打开，设置默认的 QualityLevel 不生效，始终都是 0，解决办法：把 QualitySettings.asset 工程设置文件删掉，重新用 unity2018 打开工程就好了
 
-** 飞车页游第一版本任务（对应国内1.6版本）
+** 飞车页游第一版本任务（对应国内 1.6 版本）
 + 资源相关[9/9]
-  + [X] 调整所有资源的打包assetbundle的压缩格式（使用LZ4压缩格式，webgl不支持多线程，lzma压缩的bundle会导致主线程解压缩时的卡顿）
-  + [X] 调整所有资源的加载assetbundle方式
-  + [X] UI的音效打成assetbundle
-  + [X] AI加载方式调整（主要是路径不对）
-  + [X] 赛道拆解打包assetbundle
-    + 尝试方案1：路面网格、空气墙、赛道所有贴图作为赛道基础bundle，其它周边景物拆成多个bundle
+  + [X] 调整所有资源的打包 assetbundle 的压缩格式（使用 LZ4 压缩格式，webgl 不支持多线程，lzma 压缩的 bundle 会导致主线程解压缩时的卡顿）
+  + [X] 调整所有资源的加载 assetbundle 方式
+  + [X] UI 的音效打成 assetbundle
+  + [X] AI 加载方式调整（主要是路径不对）
+  + [X] 赛道拆解打包 assetbundle
+    + 尝试方案 1：路面网格、空气墙、赛道所有贴图作为赛道基础 bundle，其它周边景物拆成多个 bundle
     + 制定调整规范，方便拆分，让各块大小尽可能相等
-  + [X] 赛道拆解加载assetbundle
-  + [X] 比赛中的Skidmark使用bundle方式打包和加载
-  + [X] 比赛中的特效、道具打包和加载assetbundle
-  + [X] 比赛中的UI打包和加载assetbundle
-    + CarBloodHUD这个prefab依赖了图集，后续要依赖打包图集
+  + [X] 赛道拆解加载 assetbundle
+  + [X] 比赛中的 Skidmark 使用 bundle 方式打包和加载
+  + [X] 比赛中的特效、道具打包和加载 assetbundle
+  + [X] 比赛中的 UI 打包和加载 assetbundle
+    + CarBloodHUD 这个 prefab 依赖了图集，后续要依赖打包图集
 
-** XLua性能测试
-+ 循环100000次
-  + 回调到Lua层（没有GenCode）耗时：0.7342305
-  + 回调到Lua层（生成GenCode）耗时：0.6729012
-  + 回调到C#层耗时：0.4556866 
+** XLua 性能测试
++ 循环 100000 次
+  + 回调到 Lua 层（没有 GenCode）耗时：0.7342305
+  + 回调到 Lua 层（生成 GenCode）耗时：0.6729012
+  + 回调到 C#层耗时：0.4556866 
   
 ** 物理公式
-+ 由于我们游戏通过配置引擎推力曲线配置加速，无法直观的得出加速到最高速度时要话多少时间，经过实验验证PhysiX遵循牛顿定理： 力=质量*加速度 即 F=M*A
++ 由于我们游戏通过配置引擎推力曲线配置加速，无法直观的得出加速到最高速度时要话多少时间，经过实验验证 PhysiX 遵循牛顿定理： 力=质量*加速度 即 F=M*A
 
 ** 技术方案
-+ 路面材质实现方式（参考Q飞）：通过发射线检测路面的顶点颜色来检测路面材质，不同颜色对应不同的材质，这需要美术同学往路面网格里添加顶点颜色；
++ 路面材质实现方式（参考 Q 飞）：通过发射线检测路面的顶点颜色来检测路面材质，不同颜色对应不同的材质，这需要美术同学往路面网格里添加顶点颜色；
 + 检测代码如下
 #+BEGIN_SRC C++
 void CheckRoad()
@@ -75,10 +78,10 @@ void CheckRoad()
     }
 }
 #+END_SRC
-+ 自动生成路径点（参考Q飞）：通过FBXSDK开发Unity插件读取Fbx文件中的样条曲线顶点坐标，然后根据样条曲线顶点坐标自动生成路径点，由于fbx中的坐标所处的坐标系是右手坐标系，Unity是左手坐标系，从FBX中读出来的坐标需要转换，转换成Unity坐标的方法为：Y坐标和Z坐标调换，然后对X坐标和Z坐标取反；
++ 自动生成路径点（参考 Q 飞）：通过 FBXSDK 开发 Unity 插件读取 Fbx 文件中的样条曲线顶点坐标，然后根据样条曲线顶点坐标自动生成路径点，由于 fbx 中的坐标所处的坐标系是右手坐标系，Unity 是左手坐标系，从 FBX 中读出来的坐标需要转换，转换成 Unity 坐标的方法为：Y 坐标和 Z 坐标调换，然后对 X 坐标和 Z 坐标取反；
  
-** 飞车2主要组件的作用说明
-+ *赛车上面的Component*
+** 飞车 2 主要组件的作用说明
++ *赛车上面的 Component*
   + Kart.cs: 赛车物理主逻辑
   + KartWheel.cs: 赛车车轮设置
   + TireMarkCreate.cs: 车轮胎痕逻辑
@@ -89,6 +92,29 @@ void CheckRoad()
   + WaypointChecker.cs: 赛车路径点逻辑
   + KartSyncDataSender.cs: 主要负责赛车同步包发送
   + KartSyncDataReceiver.cs: 主要负责赛车同步包接收
-+ *赛道上的Component*
++ *赛道上的 Component*
   + TrackPath.cs: 赛道主脚本
   + TrackPoint.cs: 赛道路径点脚本
+  
+** MVC 框架
+  + MVC 是一种使用 MVC（Model View Controller 模型-视图-控制器）设计创建 Web 应用程序的模式： [1] 
+    + Model（模型）表示应用程序核心（比如数据库记录列表）。
+    + View（视图）显示数据（数据库记录）。
+    + Controller（控制器）处理输入（写入数据库记录）。
+  + MVC 模式同时提供了对 HTML、CSS 和 JavaScript 的完全控制。
+  
+    *Model（模型）* 是应用程序中用于处理应用程序数据逻辑的部分。
+        通常模型对象负责在数据库中存取数据。
+
+    *View（视图）* 是应用程序中处理数据显示的部分。
+        通常视图是依据模型数据创建的。
+
+    *Controller（控制器）* 是应用程序中处理用户交互的部分。
+        通常控制器负责从视图读取数据，控制用户输入，并向模型发送数据。
+  
+    *MVC 框架图:*
+[[file:mvc.jpg]]
+
+[[file:mvc2.jpg]]
+
+
