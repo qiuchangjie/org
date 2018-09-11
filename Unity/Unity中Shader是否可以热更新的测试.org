@@ -1,4 +1,5 @@
 * Unity 中 Shader 是否可以热更新的测试
+转自[[https://www.cnblogs.com/cpxnet/p/6439706.html]]
 
 ** 在 unity 的资源中，shader 是比较特殊的一类。主要有下面几个疑问
 
@@ -23,8 +24,6 @@
   - 4. 不要用 Shader.Find 找自己包里的 shader，使用 AssetBundle.LoadAsset<Shader>()
  
   - 5. shadercache 随材质存储，材质可以热更新。
-
- 
 
  
 
@@ -106,7 +105,8 @@
     
     准备四个材质，分别对应
     
-    ·multi_compile      FEATURE on
+    ·multi_compile 备注：
+     FEATURE on
     
     ·multi_compile      FEATURE off
     
