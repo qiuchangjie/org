@@ -33,6 +33,7 @@ void Awake()
  
 ** 升级 Unity2018 问题记录
 + 用 unity2017 创建了工程后，再用 unity2018 打开，设置默认的 QualityLevel 不生效，始终都是 0，解决办法：把 QualitySettings.asset 工程设置文件删掉，重新用 unity2018 打开工程就好了
++ 后期处理插件 PostProcessing 在 Unity2018.2 下会报错，原因：是因为 Unity2018.2 贴图格式废弃了 ATC_RGB4、ATC_RGB8 两种格式，对这两种格式进行判断 bool supported = SystemInfo.SupportsTextureFormat((TextureFormat)format);会报错，跳过这两种 TextureFormat 的判断逻辑即可
 
 ** 飞车页游第一版本任务（对应国内 1.6 版本）
 + 资源相关[9/9]
