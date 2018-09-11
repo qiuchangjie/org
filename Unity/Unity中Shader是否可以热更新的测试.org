@@ -1,0 +1,185 @@
+* Unity 中 Shader 是否可以热更新的测试
+
+** 在 unity 的资源中，shader 是比较特殊的一类。主要有下面几个疑问
+
+  - 1. Shader 算是代码，并且需要编译。那么是否可以热更新？
+ 
+  - 2. AB 中加载进来的 shader 是否可以通过 shader.Find(名称)来索引？
+ 
+  - 3.在使用 shader_feature 关键字后，build 时忽略的变种是否要在运行时编译？
+ 
+  - 4.预编译 shader cache 的存储位置究竟在哪里？
+
+ 
+
+** 直接补充最终结论：
+
+  - 1. shader 可以热更新。
+ 
+  - 2. 使用 multi_compile 生成 Shader Variant 时，材质可以直接热更新。
+ 
+  - 3. 使用 shader_feature 生成 Shader Variant 时，可以使用 ShaderVariantCollection 来记录所有使用到的变种，实现材质热更新。（目前仍有 bug，必须将 shader、SVC 和所有材质放在一个 AB 中）
+ 
+  - 4. 不要用 Shader.Find 找自己包里的 shader，使用 AssetBundle.LoadAsset<Shader>()
+ 
+  - 5. shadercache 随材质存储，材质可以热更新。
+
+ 
+
+ 
+
+** 针对以上问题我做了一系列测试，记录如下：
+
+*** 测试一：
+    准备一个 shader，一个材质，一个 cube 做的 prefab，各自打成一个 AB。
+    
+    在一个空场景中用脚本按如下顺序加载：
+    
+    shaderAB->materialAB->prefabAB->prefab->GameObject。显示正常。
+    
+    （事实上只要保证 prefabAB->prefab->GameObject 的顺序，materialAB 和 shaderAB 在同一函数的任意位置都可以。Unity 应该是延迟处理了资源的引用关系）
+    
+    修改 shader，打成新的 ab，改名或者另存为备用。
+    
+    发布以后，在文件夹中找到对应的 shaderAB，使用新的 shaderAB 替换。
+    
+    重新启动，效果已经更新。
+
+    *结论一：shader 可以热更新！*
+
+    测试平台：android 和 pc standalone
+    
+    代码稍作修改可以在运行时实现热更新。
+
+ 
+
+*** 测试二：
+
+    准备 3 个 shader，引用同一个头文件。shader 和 cginc 全部进入一个 ab 里。
+    
+    运行时先加载 shaderAB，然后用一个按钮切换 shader
+    
+    结果如下表：
+
+    |---------------------------+-------------------+-------------------------|
+    |                           | 热更新前          | 热更新后                |
+    |---------------------------+-------------------+-------------------------|
+    | Shader.Find               | 正常（原 shader） | 错误（shader 丢失） [1] |
+    |---------------------------+-------------------+-------------------------|
+    | AssetBundle.LoadAsset [2] | 正常（原 shader） | 正常（新 shader）       |
+    |---------------------------+-------------------+-------------------------|
+    [1]    在 Standalone 或者移动平台上会有 shader 丢失；在 Editor 模式下会使用旧的 shader，仔细分析后猜测是在 Editor 模式下，shader.Find 的查找顺序如下：已加载的 AssetBundle->Shader 源文件。而在发布平台上，由于没有散的 shader 源文件，所以直接丢失。
+    
+    [2]    AssetBundle.LoadAsset 的路径要使用 Manifest 中记载的路径，如下形式：
+    
+            Assets/Shaders/Src/shaderTest2.shader
+
+    *结论二：可以在运行时手动替换上 AB 中的 shader，但必须使用 AssetBundle.LoadAsset！*
+
+    ·可以使用 cginc 头文件！
+    
+    ·可以使用文件夹管理 Shader！
+    
+    ·最好完全不使用 Shader.Find，除非你 100%确定这个 shader 不会热更新。
+
+*** 关于 Shader.Find，个人猜测如下：
+    
+    Unity 内部使用一个字典或者 HashSet 来支持 Shader.Find，这里暂且叫它 ShaderMap。ShaderMap 的键是 ShaderLab 语法中的名字；值是 Shader 文件的 GUID。
+    
+    ShaderMap 生成于 Build 项目时，保存了来自三个地方的 shader cache 引用关系：
+    
+    1. Resources 中的 shader 或 Resources 其中其他资源引用到的 shader
+    
+    2. 任意场景中引用到的 shader
+    
+    3. StreamingAssets 中 Asset Bundle 内的 Shader
+    
+        运行时使用 ShaderFind，只能找到这些 Shader，如果对应 GUID 的 shader 不存在，查找就会失败，即使热更新后加入了新的 Asset Bundle 中含有同名 Shader（即 ShaderLab 语法同名）。
+    
+    4. 目前没有办法在发布以后动态更新 ShaderMap。
+
+    [[file:pictures/shader-map.png]]
+
+*** 测试三：
+
+    准备两个同样的 shader，设定好#ifdef FEATURE，其一使用 multi_compile，其二使用 shader_feature
+    
+    准备四个材质，分别对应
+    
+    ·multi_compile      FEATURE on
+    
+    ·multi_compile      FEATURE off
+    
+    ·shader_feature   FEATURE on
+    
+    ·shader_feature   FEATURE off
+    
+    所有 shader 打成一个 ab， 所有 material 打成一个 ab
+    
+    在运行时切换 4 个材质。结果如下：
+
+    | ·multi_compile   FEATURE off | 正常                                      |
+    |------------------------------+-------------------------------------------|
+    | ·multi_compile   FEATURE on  | 正常                                      |
+    |------------------------------+-------------------------------------------|
+    | ·shader_feature  FEATURE off | 正常                                      |
+    |------------------------------+-------------------------------------------|
+    | ·shader_feature  FEATURE on  | 错误（和 shader_feature  FEATURE off 一样） |
+ 
+    +结论三：+
+    
+    +·使用 shader_feature 的 uber shader 无法热更新!(结论已更新)+
+    
+    ·若将 shader 存储于自定义 AB 时，仅按照所有 shader_feature 都没有定义的方式来编译。并且不会汇报这个编译过程中的任何错误！（如：在 shader 中定义了 shader_feature A B；并且依赖于 A、B 二者任一必须定义的话，编译就会出错。）
+    
+    ·Unity 并不会在发布平台上编译缺失的变种。（直接拿个现有的变种凑数？）
+
+*** 测试四
+
+    放弃热更新 shader，检查在使用 shader_feature 的时候，材质能否热更新。即能否在热更新时生成缺失的变种。
+    
+    准备一个 uber shader。再来 3 个材质，各使用不同的变种，并分别打成 m1,m2,m3 三个包。发布时仅选择 m1 发布，然后在运行时热更新，使用 m2,m3 替换 m1，显示效果达到预期。
+    
+    这时候注意到 m1,m2,m3 体积分别为 11,9,11KB，应该不只是存有 shader 引用和相关参数。因此再将 m1,m2,m3 打为一个 ab，体积为 11kb。
+    
+    *结论四：*
+    
+    ·在 shader 进入 mainAssets 的前提下，材质可以热更新。
+    
+    ·shader cache 随 material ab 存储，多个引用了同样 shader（变种）的材质会重复存储 cache。
+
+ 
+
+*** 更新测试五
+
+    使用 ShaderVariantCollection，记录所有用到的 variant。
+    
+    将 SVC 和 shader 打入一个 ShaderAB。
+    
+    将材质打成 MaterialAB
+    
+    运行时加载 ShaderAB，取 SVC，WarmUp，再加载 MaterialAB。结果丢失部分 variant
+    
+     
+    
+    更换分包方式，SVC、shader 和 Material 打成一个包。一切正常。
+    
+    *结论五：*
+    
+    ·使用 ShaderVariantCollection 可以做到带变种的材质更新。
+    
+    ·目前版本（5.6.0 和 5.5.2）依然有 bug，必须将 SVC、shader 和所有对应材质放在一起才能做到可热更新。
+
+ 
+
+ 
+
+*** 备注：
+
+    ·为了测试，我用 HFS 配置了局域网 http 服务器，只要在同一个无线网端下，pc 和手机都能访问，配合不同平台的 AB 分文件夹管理，所有平台都能同步看到效果。
+    
+    ·ab.Unload()会把 ab 设为 null！
+    
+    ·cginc 头文件修改后，所有用到的 shader 必须手动 import 一次以强制重新编译！
+ 
+
