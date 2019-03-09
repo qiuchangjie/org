@@ -1,0 +1,7 @@
+* 飞车2
+
+** 升级Unity2018.3问题记录
++ unity 2018.3 android 勾选GPU Skinning 报错 原因：unity2018.3的bug
++ unity 2018.3 android 报错 Unexpected Crunch texture format 原因：主场景的贴图使用了Crunched压缩算法的ETC图片
+
+
