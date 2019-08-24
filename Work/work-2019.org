@@ -1,4 +1,12 @@
 * 飞车2
+** 性能测试记录
+*** 2019-04-08
++ 大喷时帧率降的比较明显，怀疑是大喷特效存在性能问题
++ 漂移时帧率会下降，怀疑是车轮烟雾存在性能问题
++ 物理耗时比较高，寻找方案降低物理开销，可以尝试：
+  + 尽量使用较简单的碰撞形状，通常耗時 Sphere < Capsule < Box < Convex
+  + 降低碰撞求解的迭代次数 Physics.defaultSolverIterations / Rigidbody.solverIterations，但会降低模拟准确度
+  + 减低刚体休眠阈值 Physics.sleepThreshold，令减速中的刚体尽早进入休眠状态。
 
 ** 升级Unity2018.3问题记录
 + unity 2018.3 android 勾选GPU Skinning 报错 原因：unity2018.3的bug
@@ -9,5 +17,9 @@
   + Linux操作系统会对于 非对齐内存访问的进程，发送SIGBUS的信号，你的程序，接收到这个信号后，进行coredump，并退出了。
   + Windows操作系统允许 非地址对齐的内存访问（会损失性能），所以程序在Windows操作系统下，不会出现error。
   + Win32平台下的微软VC编译器在默认情况下采用如下的对齐规则: 任何基本数据类型T的对齐模数就是T的大小，即sizeof(T)。比如对于double类型(8字节)，就要求该类型数据的地址总是8的倍数，而char类型数据(1字节)则可以从任何一个地址开始。Linux下的GCC奉行的是另外一套规则:任何2字节大小(包括单字节吗?)的数据类型(比如short)的对齐模数是2，而其它所有超过2字节的数据类型(比如long,double)都以4为对齐模数。
+  
+** 问题记录
++ Camera渲染赛车或者人物到RenderTexture放到UI上在移动平台背景变黑
+  + 因为Camera开启了HDR，把HDR关闭
 
 

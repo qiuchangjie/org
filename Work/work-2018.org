@@ -93,6 +93,8 @@ void CheckRoad()
   + WaypointChecker.cs: 赛车路径点逻辑
   + KartSyncDataSender.cs: 主要负责赛车同步包发送
   + KartSyncDataReceiver.cs: 主要负责赛车同步包接收
+  + KartEnergyManager.cs: 大喷集气逻辑
+  + KartBoostManager.cs: 各种氮气参数及逻辑
 + *赛道上的 Component*
   + TrackPath.cs: 赛道主脚本
   + TrackPoint.cs: 赛道路径点脚本
