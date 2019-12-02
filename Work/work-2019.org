@@ -24,6 +24,6 @@
 + TireMarkCreate是通过动态生成网格的方式生成胎痕，有概率遇到胎痕的位置跟车轮位置不匹配，胎痕的位置落后与车轮位置
   + 设置TireMarkCreate的Script Execution Order在Default Time之前
 + Shader抽离出来放在ResourcesExt/Shaders目录里面，对整个Shaders文件夹打AB，发现场景lightmap丢失，通过frame debug查看渲染，是因为shader的keyword不对；查了一些资料，应该是shader打AB时优化了一些keyword，尝试选中shader去掉编译选项skip unused shader_features，重新打资源，场景光照效果正确了，但是ShaderAB的体积变大。
-  + 网上的说法：Shader只有在和材质球/ShaderVariantCollection打包到同一个AssetBundle里的时候才能知道需要哪些shader_feature，否则会丢失…（亲自试过ShaderVariantCollection和Shader打在一个AB里面 ，好像并不能解决问题）
+  + 网上的说法：Shader只有在和材质球/ShaderVariantCollection打包到同一个AssetBundle里的时候才能知道需要哪些shader_feature，否则会丢失…（试过ShaderVariantCollection和Shader打在一个AB里面 ，需要手动删掉Shaders.assetbundle触发重新打包AB才可以，或者通过修改GraphicsSettings.asset里面的Shader Stripping）
 
 
