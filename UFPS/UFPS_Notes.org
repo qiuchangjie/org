@@ -1,0 +1,45 @@
+* UFPS
+** UltimateCharacterLocomotionHandler
++ 管理玩家输入以及角色移动
+** StateManager
++ 单例，状态机管理类
+** KinematicObjectManager
++ 单例，动力学对象管理类，统一处理更新对象的位置和物理（角色、摄像机）
+
+
+** Items类图plantuml
+#+BEGIN_SRC plantuml :file ./UFPS_Items_Class.png
+IStateOwner <|-- StateObject
+StateObject <|-- Ability
+Ability <|-- ItemAbility
+ItemAbility <|-- ItemSetAbilityBase
+ItemSetAbilityBase <|-- EquipSwitcher
+ItemAbility <|-- Aim
+ItemAbility <|-- Drop
+EquipSwitcher <|-- EquipNext
+EquipSwitcher <|-- EquipPrevious
+ItemSetAbilityBase <|-- EquipScroll
+ItemSetAbilityBase <|-- EquipUnequip
+ItemAbility <|-- Reload
+EquipSwitcher <|-- ToggleEquip
+ItemAbility <|-- Use
+#+END_SRC
+#+RESULTS:
+[[file:./UFPS_Items_Class.png]]
+
+** UltimateCharacterLocomotion
+#+BEGIN_SRC plantuml :file ./UFPS_UltimateCharacterLocomotion.png
+IStateOwner <|-- StateBehaviour
+MonoBehaviour <|-- StateBehaviour
+IForceObject <|-- CharacterLocomotion
+StateBehaviour <|-- CharacterLocomotion
+CharacterLocomotion <|-- UltimateCharacterLocomotion
+
+note left of StateBehaviour:Acts as the parent component which can use the state system to change property values.
+
+
+note left of CharacterLocomotion:The CharacterLocomotion class serves as the base character controller class.
+#+END_SRC
+
+#+RESULTS:
+[[file:./UFPS_UltimateCharacterLocomotion.png]]

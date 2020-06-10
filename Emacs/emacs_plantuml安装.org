@@ -1,0 +1,27 @@
+#+TITLE: Emacs Plantuml安装
+
+* 准备环境
++ =1= 下载java，并安装，因为plantuml.jar需要java环境运行。
++ =2= 下载plantuml.jar保存在本地 http://www.plantuml.com/download.html
++ =3= 下载graphviz并安装，添加环境变量GRAPHVIZ_DOT的值为
+  D:\Software\Graphviz2.38\bin\dot.exe，一定要添加这个环境变量，否则会一直报无法
+  找到dot executable http://www.plantuml.com/graphvizdot.html
+
+* emacs配置
+#+BEGIN_SRC elisp
+;; Enable plantuml-mode for PlantUML files
+(add-to-list 'auto-mode-alist '("\\.plantuml\\'" . plantuml-mode))
+;; Sample jar configuration
+(setq plantuml-jar-path "D:/Software/doom-emacs-26.3/.emacs.d/plantuml.jar")
+(setq plantuml-default-exec-mode 'jar)
+;; active org-babel languages
+(org-babel-do-load-languages
+  'org-babel-load-languages '(;; other babel languages
+    (plantuml . t)))
+(setq org-plantuml-jar-path (expand-file-name "D:/Software/doom-emacs-26.3/.emacs.d/plantuml.jar"))
+;; Integration with org-mode
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+#+END_SRC
+
+* 生成图片
++ 在org模式下，光标移到plantuml代码中，然后C-C C-C 就会生成图片
