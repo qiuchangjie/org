@@ -1,0 +1,24 @@
+* w9项目
+
+** 集成飞车2的Lua框架
++ UI代码生成工具，拖UI Prefab然后生成代码文件（Reference、View、Model、Config、
+  MsgName）
++ 热更新移植
+
+** 开发单局的加载功能
++ 跑通游戏正式流程，用Lua实现单局的加载功能（要考虑可扩展性，目前demo阶段只加载场景即可）
+
+** 拆解战斗行为树
+
+** 整理新工程
+*** 工程目录说明
++ Asset
+  + ArtResources ==> 存放美术资源
+  + Editor ==> 存放编辑器代码
+  + LuaScripts ==> Lua代码
+  + Plugins ==> 插件类的代码
+    + ThirdPart ==> 第三方插件
+  + Resources ==> 尽量不放东西，目前临时放了demo相关的资源，后面会删掉
+  + ResourcesExt ==> 放正式资源，后面会打成AB
+  + Scripts ==> C#代码
+  + StreamingAssets

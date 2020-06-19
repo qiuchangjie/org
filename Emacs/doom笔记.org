@@ -1,0 +1,7 @@
+#+TITLE: Doom笔记
+
+* 安装all-the-icons
++ 在emacs中 M-x all-the-icons-install-fonts 下载字体文件，然后把所有字体都安装
+
+* 安装omnisharp-server
++ 在emacs中 M-x omnisharp-install-server 安装

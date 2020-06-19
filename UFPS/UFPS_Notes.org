@@ -5,6 +5,8 @@
 + 单例，状态机管理类
 ** KinematicObjectManager
 + 单例，动力学对象管理类，统一处理更新对象的位置和物理（角色、摄像机）
+** CameraController
++ 摄像机跟随，可以调整跟随部位和偏移位置
 
 
 ** Items类图plantuml
