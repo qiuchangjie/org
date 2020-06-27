@@ -2,6 +2,18 @@
 
 * 安装all-the-icons
 + 在emacs中 M-x all-the-icons-install-fonts 下载字体文件，然后把所有字体都安装
+  + By default all-the-icons will not be enabled in Windows.
+  + If all-the-icons is not installed. Open emacs and M-x package-install RET all-the-icons RET.
+  + M-x all-the-icons-install-fonts select where to download the fonts and install them (double click -> install).
+  + Restart emacs and there you go.
 
-* 安装omnisharp-server
+
+* 安装omnisharp-server(C#)
 + 在emacs中 M-x omnisharp-install-server 安装
++ doom中的omnishar-server是根据当前打开的C#文件所在的目录作为工程根目录，会有问
+  题，无法找到工程文件
+
+* ivy依赖rg搜索工具
++ 在windows安装用choco安装比较方便：choco install ripgrep
++ Download [[https://github.com/BurntSushi/ripgrep/releases][Ripgrep]] and [[https://github.com/sharkdp/fd/releases][fd]]. Make sure you download the windows-gnu version.
+  + Extract the binaries1 from Ripgrep and fd to their respective folders and place them where you want.
