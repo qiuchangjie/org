@@ -1,0 +1,15 @@
+#+TITLE: Ufps Note
+
+* 各个类的作用概述
+** 角色身上的类
++ CharacterHealth: 计算伤害
++ AttributeManager: 管理角色属性
++ Invoentory: 角色身上的物品清单（背包）
+
+** 全局类
++ SurfaceManager: 材质管理
++ DecalManager: 贴花管理
++ KinematicObjectManager: 动力学对象管理
++ Scheduler: 调度器
++ AudioManager: 音效管理
++ SpawnPointManager: 确定对象的出生点
