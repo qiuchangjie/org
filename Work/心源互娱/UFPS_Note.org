@@ -13,3 +13,7 @@
 + Scheduler: 调度器
 + AudioManager: 音效管理
 + SpawnPointManager: 确定对象的出生点
+
+** 其它
++ StateObject: 可用State来改变属性的类
++ StateBehaviour: 可用State来改变属性的组件
