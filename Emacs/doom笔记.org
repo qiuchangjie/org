@@ -17,7 +17,11 @@
 + 在windows安装用choco安装比较方便：choco install ripgrep
 + Download [[https://github.com/BurntSushi/ripgrep/releases][Ripgrep]] and [[https://github.com/sharkdp/fd/releases][fd]]. Make sure you download the windows-gnu version.
   + Extract the binaries1 from Ripgrep and fd to their respective folders and place them where you want.
++ rg搜索时通过在最后加上 -- -t lua 可以按文件类型来过滤搜索结果。
 
 * 每次打开文件都会改变Working Directory
-+ 在工程根目录添加.project文件，doom emacs会把该文件所在的文件夹当成工程根目录，
-  每次打开文件都不会改变Working Directory，能比较方便查找整个工程的文件。
++ 在工程根目录添加.project文件，doom emacs会把该文件所在的文件夹当成工程根目录
+
+* 打开c++文件、python文件时关键字被替换为特殊字符
++ 经过排查，发现是因为c-mode、c++-mode、python-mode等情况下启用了pretty-code，关
+  闭pretty-code就行了，(setq +pretty-code-enabled-modes nil)
