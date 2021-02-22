@@ -720,3 +720,11 @@
 本周心流：
 1. 本周打了安卓包，运行占用内存过高，在一般机器上跑不起来，我把贴图的格式改成了ETC，并压小了一些贴图的尺寸。压缩了贴图，贴图内存是降低了，发现ShaderLab占用内存很大，设备上峰值达到0.77GB，应该是shader变体较多，已经把问题反馈给TA，建议他降低我们自己写的shader用的keyword，剔除用不到的变体，把使用unity内置Standard的shader的材质改成用我们自己的shader。
 2. 为了提高运行时的流畅度，可以通过unity收集shader变体，保存shadervariants文件，在加载shader的bundle文件后，通过ShaderVariantCollection.WarmUp来预编译shader，下次加载的资源如果引用到了这个Shader的话不需要再次去解析编译了，降低游戏运行时由于加载和编译带来的卡顿。
+
+* 2020-01-11 To 2020-01-15 Week Report
+
+本周心流：
+1. FrameDebugger看到Camera.ImageEffects 下一直有 Draw Dynamic，经过排查，是因为
+   有摄像机开启了HDR
+2. 开场动画镜头过渡一直有卡顿的问题，查到是因为镜头动画最后一段动画没有播放，因
+   为角色没有被摄像机拍到，深坑：Animator的Culling Mode选了Cull Update Transforms，如果摄像机没有渲染角色，动画不刷新，改成Always Animate
